@@ -1,0 +1,7093 @@
+/* =========================================================
+   OMNIX - APP LEVEL STYLES
+   ========================================================= */
+
+/* =========================================================
+   APP ROOT
+   ========================================================= */
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.app {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+
+  background: var(--bg-primary);
+  color: var(--text-primary);
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   APP SHELL
+   ========================================================= */
+
+.app-shell {
+  position: relative;
+
+  display: flex;
+
+  width: 100%;
+  min-height: 100vh;
+
+  background: var(--bg-primary);
+}
+
+
+/* =========================================================
+   MAIN APPLICATION AREA
+   ========================================================= */
+
+.app-main {
+  position: relative;
+
+  flex: 1;
+  min-width: 0;
+  min-height: 100vh;
+
+  background: var(--bg-primary);
+
+  transition:
+    margin-left var(--transition-normal),
+    margin-right var(--transition-normal),
+    width var(--transition-normal);
+}
+
+
+/* =========================================================
+   CONTENT AREA
+   ========================================================= */
+
+.app-content {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  padding-top: var(--topbar-height);
+
+  background: var(--bg-primary);
+}
+
+
+/* =========================================================
+   CENTER CONTENT
+   ========================================================= */
+
+.app-content-inner {
+  width: 100%;
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+}
+
+
+/* =========================================================
+   SOCIAL FEED LAYOUT
+   ========================================================= */
+
+.feed-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    var(--right-sidebar-width);
+
+  gap: 24px;
+
+  width: 100%;
+  max-width: 1120px;
+
+  margin: 0 auto;
+}
+
+.feed-main {
+  min-width: 0;
+}
+
+.feed-sidebar {
+  width: var(--right-sidebar-width);
+}
+
+
+/* =========================================================
+   SINGLE COLUMN PAGE
+   ========================================================= */
+
+.single-page {
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+}
+
+
+/* =========================================================
+   PROFILE LAYOUT
+   ========================================================= */
+
+.profile-page {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+
+  gap: 28px;
+
+  padding: 24px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.profile-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 700;
+
+  color: var(--text-primary);
+}
+
+.profile-username {
+  margin-top: 3px;
+
+  font-size: 14px;
+
+  color: var(--text-secondary);
+}
+
+.profile-bio {
+  margin-top: 12px;
+
+  max-width: 600px;
+
+  color: var(--text-secondary);
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   PROFILE STATS
+   ========================================================= */
+
+.profile-stats {
+  display: flex;
+  align-items: center;
+
+  gap: 30px;
+
+  margin-top: 20px;
+}
+
+.profile-stat {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  min-width: 70px;
+}
+
+.profile-stat-value {
+  font-size: 18px;
+  font-weight: 700;
+
+  color: var(--text-primary);
+}
+
+.profile-stat-label {
+  margin-top: 2px;
+
+  font-size: 13px;
+
+  color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   PROFILE POSTS GRID
+   ========================================================= */
+
+.profile-posts {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 3px;
+
+  margin-top: 24px;
+}
+
+.profile-post {
+  position: relative;
+
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: var(--bg-tertiary);
+
+  cursor: pointer;
+}
+
+.profile-post img,
+.profile-post video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform var(--transition-normal);
+}
+
+.profile-post:hover img,
+.profile-post:hover video {
+  transform: scale(1.04);
+}
+
+
+/* =========================================================
+   POST OVERLAY
+   ========================================================= */
+
+.profile-post-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  color: #ffffff;
+
+  opacity: 0;
+
+  transition:
+    opacity var(--transition-normal);
+}
+
+.profile-post:hover .profile-post-overlay {
+  opacity: 1;
+}
+
+.profile-post-stat {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   POST CARD
+   ========================================================= */
+
+.post-card {
+  width: 100%;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: var(--radius-md);
+
+  overflow: hidden;
+
+  transition:
+    box-shadow var(--transition-normal),
+    border-color var(--transition-normal);
+}
+
+.post-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================================
+   POST HEADER
+   ========================================================= */
+
+.post-header {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 14px 16px;
+}
+
+.post-user {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: 0;
+
+  flex: 1;
+}
+
+.post-user-info {
+  min-width: 0;
+}
+
+.post-user-name {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: var(--text-primary);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-user-time {
+  display: block;
+
+  margin-top: 1px;
+
+  font-size: 12px;
+
+  color: var(--text-muted);
+}
+
+
+/* =========================================================
+   POST MEDIA
+   ========================================================= */
+
+.post-media {
+  position: relative;
+
+  width: 100%;
+
+  background: #000;
+
+  overflow: hidden;
+}
+
+.post-media img,
+.post-media video {
+  display: block;
+
+  width: 100%;
+
+  max-height: 700px;
+
+  margin: 0 auto;
+
+  object-fit: contain;
+}
+
+
+/* =========================================================
+   POST CONTENT
+   ========================================================= */
+
+.post-content {
+  padding: 12px 16px 16px;
+}
+
+.post-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  margin-bottom: 8px;
+}
+
+.post-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: var(--text-primary);
+
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.post-action:hover {
+  background: var(--surface-hover);
+}
+
+.post-action:active {
+  transform: scale(0.9);
+}
+
+.post-caption {
+  color: var(--text-primary);
+
+  font-size: 14px;
+
+  line-height: 1.55;
+}
+
+.post-caption-username {
+  margin-right: 5px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   COMMENTS
+   ========================================================= */
+
+.comments-section {
+  margin-top: 12px;
+}
+
+.comment-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.comment-item {
+  display: flex;
+
+  gap: 10px;
+}
+
+.comment-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.comment-author {
+  font-weight: 600;
+
+  color: var(--text-primary);
+}
+
+.comment-text {
+  margin-top: 2px;
+
+  color: var(--text-secondary);
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   CREATE POST
+   ========================================================= */
+
+.create-post {
+  width: 100%;
+  max-width: 720px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+}
+
+.create-post-card {
+  background: var(--surface);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+
+  overflow: hidden;
+}
+
+.create-post-header {
+  padding: 18px 20px;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.create-post-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.create-post-body {
+  padding: 20px;
+}
+
+
+/* =========================================================
+   MEDIA UPLOADER
+   ========================================================= */
+
+.media-uploader {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 300px;
+
+  padding: 30px;
+
+  background: var(--bg-secondary);
+
+  border: 2px dashed var(--border-color);
+
+  border-radius: var(--radius-md);
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    border-color var(--transition-normal),
+    background-color var(--transition-normal);
+}
+
+.media-uploader:hover {
+  background: var(--surface-hover);
+
+  border-color: var(--text-secondary);
+}
+
+.media-preview {
+  position: relative;
+
+  width: 100%;
+
+  overflow: hidden;
+
+  border-radius: var(--radius-md);
+}
+
+.media-preview img,
+.media-preview video {
+  display: block;
+
+  width: 100%;
+  max-height: 600px;
+
+  object-fit: contain;
+
+  background: #000;
+}
+
+
+/* =========================================================
+   EXPLORE GRID
+   ========================================================= */
+
+.explore-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 4px;
+
+  width: 100%;
+}
+
+.explore-item {
+  position: relative;
+
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  background: var(--bg-tertiary);
+
+  cursor: pointer;
+}
+
+.explore-item img,
+.explore-item video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transition:
+    transform var(--transition-normal);
+}
+
+.explore-item:hover img,
+.explore-item:hover video {
+  transform: scale(1.05);
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.search-box {
+  position: relative;
+
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+
+  min-height: 42px;
+
+  padding: 10px 42px 10px 42px;
+
+  background: var(--bg-secondary);
+
+  border: 1px solid transparent;
+
+  border-radius: var(--radius-full);
+
+  outline: none;
+
+  color: var(--text-primary);
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.search-input:focus {
+  background: var(--surface);
+
+  border-color: var(--border-color);
+}
+
+.search-icon {
+  position: absolute;
+
+  top: 50%;
+  left: 14px;
+
+  transform: translateY(-50%);
+
+  color: var(--text-muted);
+
+  pointer-events: none;
+}
+
+.search-clear {
+  position: absolute;
+
+  top: 50%;
+  right: 10px;
+
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+.notifications-page {
+  width: 100%;
+  max-width: 700px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+}
+
+.notification-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px;
+
+  border-bottom: 1px solid var(--border-color);
+
+  transition:
+    background-color var(--transition-fast);
+}
+
+.notification-item:hover {
+  background: var(--surface-hover);
+}
+
+.notification-item.unread {
+  background: var(--bg-secondary);
+}
+
+.notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-text {
+  font-size: 14px;
+
+  color: var(--text-primary);
+}
+
+.notification-time {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 12px;
+
+  color: var(--text-muted);
+}
+
+
+/* =========================================================
+   SAVED POSTS
+   ========================================================= */
+
+.saved-page {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+}
+
+.saved-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 4px;
+}
+
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+.settings-page {
+  width: 100%;
+  max-width: 800px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+}
+
+.settings-section {
+  margin-bottom: 24px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: var(--radius-md);
+
+  overflow: hidden;
+}
+
+.settings-section-title {
+  padding: 16px 18px;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 16px 18px;
+
+  border-bottom: 1px solid var(--border-light);
+}
+
+.settings-item:last-child {
+  border-bottom: 0;
+}
+
+.settings-item-info {
+  min-width: 0;
+}
+
+.settings-item-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-item-description {
+  margin-top: 3px;
+
+  font-size: 13px;
+
+  color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   REPORT PAGE
+   ========================================================= */
+
+.report-page {
+  width: 100%;
+  max-width: 650px;
+
+  margin: 0 auto;
+
+  padding: 24px;
+}
+
+.report-card {
+  padding: 24px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.report-reasons {
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-top: 16px;
+}
+
+.report-reason {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: var(--radius-sm);
+
+  cursor: pointer;
+
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.report-reason:hover {
+  background: var(--surface-hover);
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.app-modal {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: var(--z-modal);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  backdrop-filter: blur(4px);
+}
+
+.app-modal-content {
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 40px);
+
+  overflow-y: auto;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: var(--radius-lg);
+
+  box-shadow: var(--shadow-lg);
+
+  animation: modalIn 0.25s ease forwards;
+}
+
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.app-toast-container {
+  position: fixed;
+
+  right: 20px;
+  bottom: 20px;
+
+  z-index: var(--z-toast);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  width: min(380px, calc(100vw - 40px));
+}
+
+.app-toast {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 13px 15px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border-color);
+
+  border-radius: var(--radius-md);
+
+  box-shadow: var(--shadow-lg);
+
+  animation: toastIn 0.3s ease forwards;
+}
+
+
+/* =========================================================
+   ONLINE STATUS
+   ========================================================= */
+
+.online-indicator {
+  position: absolute;
+
+  right: 0;
+  bottom: 0;
+
+  width: 11px;
+  height: 11px;
+
+  border: 2px solid var(--surface);
+
+  border-radius: 50%;
+
+  background: var(--success);
+}
+
+
+/* =========================================================
+   VERIFIED BADGE
+   ========================================================= */
+
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+
+  margin-left: 4px;
+
+  border-radius: 50%;
+
+  background: var(--info);
+
+  color: #ffffff;
+
+  font-size: 10px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FOLLOW BUTTON
+   ========================================================= */
+
+.follow-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 90px;
+
+  padding: 8px 16px;
+
+  border-radius: var(--radius-sm);
+
+  background: var(--primary);
+
+  color: var(--text-inverse);
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition:
+    background-color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.follow-button:hover {
+  background: var(--primary-hover);
+}
+
+.follow-button:active {
+  transform: scale(0.96);
+}
+
+.follow-button.following {
+  background: var(--bg-tertiary);
+
+  color: var(--text-primary);
+}
+
+
+/* =========================================================
+   ERROR / 404
+   ========================================================= */
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 70vh;
+
+  padding: 30px;
+
+  text-align: center;
+}
+
+.not-found-title {
+  font-size: clamp(56px, 10vw, 120px);
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  letter-spacing: -4px;
+}
+
+.not-found-text {
+  margin-top: 12px;
+
+  color: var(--text-secondary);
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.page-description {
+  margin-top: 4px;
+
+  color: var(--text-secondary);
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   MESSAGES PAGE
+===================================================== */
+
+.messages-page {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 70px);
+  overflow: hidden;
+  background: #f8f9fb;
+}
+
+/* =====================================================
+   CONVERSATION SIDEBAR
+===================================================== */
+
+.messages-sidebar {
+  width: 350px;
+  min-width: 350px;
+  height: 100%;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  overflow-y: auto;
+}
+
+.conversation-list {
+  width: 100%;
+  height: 100%;
+}
+
+.conversation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.conversation-header h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.conversation-count {
+  display: block;
+  margin-top: 4px;
+  color: #888;
+  font-size: 13px;
+}
+
+.new-message-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: #111827;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.conversation-search {
+  padding: 12px 16px;
+}
+
+/* =====================================================
+   USER SEARCH
+===================================================== */
+
+.user-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.user-search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 14px;
+}
+
+.user-search-input {
+  width: 100%;
+  padding: 11px 40px;
+  border: none;
+  border-radius: 10px;
+  background: #f1f3f5;
+  outline: none;
+}
+
+.user-search-clear {
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* =====================================================
+   CONVERSATION ITEM
+===================================================== */
+
+.conversation-items {
+  overflow-y: auto;
+}
+
+.conversation-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 12px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.conversation-item:hover {
+  background: #f5f5f5;
+}
+
+.conversation-item-active {
+  background: #eeeeee;
+}
+
+.conversation-avatar-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.conversation-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.online-status {
+  position: absolute;
+  right: 1px;
+  bottom: 2px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.conversation-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.conversation-top,
+.conversation-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.conversation-top h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.conversation-time {
+  color: #999;
+  font-size: 11px;
+}
+
+.conversation-last-message {
+  margin: 5px 0 0;
+  color: #777;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unread-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 10px;
+  background: #111827;
+  color: white;
+  font-size: 11px;
+}
+
+/* =====================================================
+   CHAT AREA
+===================================================== */
+
+.messages-chat {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  background: white;
+}
+
+/* =====================================================
+   MESSAGE HEADER
+===================================================== */
+
+.message-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 70px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background: white;
+}
+
+.message-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.message-header-avatar-wrapper {
+  position: relative;
+}
+
+.message-header-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ==========================================================
+   MORE OPTIONS WRAPPER
+   ========================================================== */
+
+.message-header-more-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+/* ==========================================================
+   MORE BUTTON ACTIVE
+   ========================================================== */
+
+.message-header-button.active {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+
+/* ==========================================================
+   MORE OPTIONS CARD
+   ========================================================== */
+
+.message-header-more-menu {
+  position: absolute;
+
+  top: calc(100% + 8px);
+  right: 0;
+
+  width: 170px;
+
+  padding: 6px;
+
+  background: #ffffff;
+
+  border: 1px solid rgba(0, 0, 0, 0.08);
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.14),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+
+  z-index: 1000;
+
+  animation: messageMoreMenuIn 0.14s ease-out;
+}
+
+
+/* ==========================================================
+   MENU ITEM
+   ========================================================== */
+
+.message-header-more-item {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 10px 11px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #111111;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+
+/* ==========================================================
+   HOVER
+   ========================================================== */
+
+.message-header-more-item:hover {
+  background: #f5f5f5;
+}
+
+
+/* ==========================================================
+   ICON
+   ========================================================== */
+
+.message-header-more-icon {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  font-size: 15px;
+}
+
+
+/* ==========================================================
+   REPORT
+   ========================================================== */
+
+.message-header-more-item.report {
+  color: #d93025;
+}
+
+.message-header-more-item.report:hover {
+  background: #fff1f0;
+}
+
+
+/* ==========================================================
+   ANIMATION
+   ========================================================== */
+
+@keyframes messageMoreMenuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media (max-width: 600px) {
+  .message-header-more-menu {
+    width: 155px;
+    right: -4px;
+  }
+
+  .message-header-more-item {
+    padding: 10px;
+    font-size: 13px;
+  }
+}
+
+.message-header-online {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 11px;
+  height: 11px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.message-user-details h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.message-user-status {
+  display: block;
+  margin-top: 3px;
+  color: #777;
+  font-size: 12px;
+}
+
+.message-header-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.message-header-button,
+.message-back-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 19px;
+}
+
+/* =====================================================
+   MESSAGE LIST
+===================================================== */
+
+.message-list {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.message-date {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 20px;
+}
+
+.message-date span {
+  padding: 5px 12px;
+  border-radius: 15px;
+  background: #f1f1f1;
+  color: #777;
+  font-size: 11px;
+}
+
+.messages-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* =====================================================
+   MESSAGE ITEM
+===================================================== */
+
+.message-item {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  width: fit-content;
+  max-width: 75%;
+}
+
+.message-item-own {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-item-other {
+  align-self: flex-start;
+  flex-direction: row;
+}
+
+.message-item-avatar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.message-content-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.message-item-own .message-content-wrapper {
+  align-items: flex-end;
+}
+
+.message-item-other .message-content-wrapper {
+  align-items: flex-start;
+}
+
+.message-bubble {
+  max-width: 500px;
+  padding: 10px 14px;
+  border-radius: 16px;
+}
+
+.message-bubble-own {
+  border-bottom-right-radius: 4px;
+  background: #111827;
+  color: white;
+}
+
+.message-bubble-other {
+  border-bottom-left-radius: 4px;
+  background: #f1f3f5;
+  color: #111827;
+}
+
+.message-text {
+  margin: 0;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.message-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.message-time {
+  color: #999;
+  font-size: 10px;
+}
+
+.message-status {
+  font-size: 12px;
+}
+
+.message-seen {
+  color: #2563eb;
+}
+
+.message-delivered {
+  color: #999;
+}
+
+/* =====================================================
+   MESSAGE INPUT
+===================================================== */
+
+.message-input-container {
+  position: relative;
+  padding: 12px 16px;
+  border-top: 1px solid #e5e7eb;
+  background: white;
+}
+
+.message-input-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.input-action-button,
+.send-message-button {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.input-action-button {
+  background: #f1f3f5;
+}
+
+.send-message-button {
+  background: #111827;
+  color: white;
+  font-size: 17px;
+}
+
+.send-message-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.message-textarea {
+  flex: 1;
+  min-height: 40px;
+  max-height: 120px;
+  padding: 10px 14px;
+  border: 1px solid #e1e1e1;
+  border-radius: 20px;
+  outline: none;
+  resize: none;
+  font-family: inherit;
+}
+
+.message-textarea:focus {
+  border-color: #999;
+}
+
+/* =====================================================
+   EMOJI PICKER
+===================================================== */
+
+.emoji-picker {
+  position: absolute;
+  bottom: 70px;
+  left: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  width: 230px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
+}
+
+.emoji-button {
+  border: none;
+  background: transparent;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+/* ============================================================
+   MESSAGE HOVER ACTIONS
+
+   Own Message   -> LEFT
+   Other Message -> RIGHT
+
+   3 Dot -> Reply -> Emoji
+============================================================ */
+
+.message-hover-actions {
+
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  z-index: 100;
+
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
+}
+
+
+/* ============================================================
+   OWN MESSAGE
+   Actions LEFT
+============================================================ */
+
+.message-item-own .message-hover-actions {
+
+  right: calc(100% + 8px);
+
+}
+
+
+/* ============================================================
+   OTHER USER MESSAGE
+   Actions RIGHT
+============================================================ */
+
+.message-item-other .message-hover-actions {
+
+  left: calc(100% + 8px);
+
+}
+
+
+/* ============================================================
+   SHOW ON MESSAGE HOVER
+============================================================ */
+
+.message-content-wrapper:hover
+.message-hover-actions {
+
+  opacity: 1;
+
+  visibility: visible;
+
+  pointer-events: auto;
+
+}
+
+
+/* ============================================================
+   KEEP ACTIONS VISIBLE WHILE CURSOR IS ON ACTIONS
+============================================================ */
+
+.message-hover-actions:hover {
+
+  opacity: 1;
+
+  visibility: visible;
+
+  pointer-events: auto;
+
+}
+
+
+/* ============================================================
+   INVISIBLE HOVER BRIDGE
+
+   Own message:
+   message  <---- gap ---->  actions
+
+   Other message:
+   message  <---- gap ---->  actions
+
+   Bridge cursor ko message se actions tak le jaane deta hai.
+============================================================ */
+
+.message-hover-actions::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  width: 12px;
+
+  height: 100%;
+
+  background: transparent;
+
+  pointer-events: auto;
+
+}
+
+
+/* ============================================================
+   OWN MESSAGE
+   Bridge RIGHT side of actions
+============================================================ */
+
+.message-item-own .message-hover-actions::before {
+
+  right: -10px;
+
+}
+
+
+/* ============================================================
+   OTHER MESSAGE
+   Bridge LEFT side of actions
+============================================================ */
+
+.message-item-other .message-hover-actions::before {
+
+  left: -10px;
+
+}
+
+
+/* ============================================================
+   HOVER ACTION BUTTON
+============================================================ */
+
+.message-hover-action-button {
+
+  position: relative;
+
+  z-index: 2;
+
+  width: 30px;
+
+  height: 30px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #374151;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  line-height: 1;
+
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.12);
+
+}
+
+
+.message-hover-action-button:hover {
+
+  background: #f3f4f6;
+
+  transform: scale(1.08);
+
+}
+
+/* =====================================================
+   TYPING INDICATOR
+===================================================== */
+
+.typing-indicator {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 0 20px 10px;
+}
+
+.typing-avatar img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.typing-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.typing-bubble {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  padding: 9px 12px;
+  border-radius: 15px;
+  background: #f1f3f5;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #777;
+  animation: typingAnimation 1.2s infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingAnimation {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-4px);
+  }
+}
+
+.typing-text {
+  color: #888;
+  font-size: 10px;
+}
+
+/* =====================================================
+   EMPTY CHAT
+===================================================== */
+
+.empty-chat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  padding: 30px;
+}
+
+.empty-chat-content {
+  max-width: 350px;
+}
+
+.empty-chat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border: 2px solid #222;
+  border-radius: 50%;
+  font-size: 35px;
+}
+
+.empty-chat-content h2 {
+  margin: 0 0 8px;
+}
+
+.empty-chat-content p {
+  margin: 0;
+  color: #777;
+}
+
+.empty-chat-button {
+  margin-top: 20px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  background: #111827;
+  color: white;
+  cursor: pointer;
+}
+
+/* =====================================================
+   NEW MESSAGE MODAL
+===================================================== */
+
+.new-message-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.new-message-modal {
+  width: 100%;
+  max-width: 450px;
+  max-height: 80vh;
+  overflow: hidden;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+}
+
+.new-message-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.new-message-header h2 {
+  margin: 0;
+}
+
+.new-message-header p {
+  margin: 5px 0 0;
+  color: #888;
+  font-size: 13px;
+}
+
+.new-message-close {
+  border: none;
+  background: transparent;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.new-message-search {
+  position: relative;
+  margin: 15px;
+}
+
+.new-message-search input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 15px 12px 40px;
+  border: none;
+  border-radius: 10px;
+  background: #f1f3f5;
+  outline: none;
+}
+
+.new-message-users {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.new-message-user {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+  padding: 12px 18px;
+  border: none;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+}
+
+.new-message-user:hover {
+  background: #f7f7f7;
+}
+
+.new-message-user-selected {
+  background: #eeeeee;
+}
+
+.new-message-avatar-wrapper {
+  position: relative;
+}
+
+.new-message-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.new-message-online {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.new-message-user-info {
+  flex: 1;
+}
+
+.new-message-user-info h4 {
+  margin: 0;
+}
+
+.new-message-user-info span {
+  color: #888;
+  font-size: 12px;
+}
+
+.new-message-check {
+  font-size: 18px;
+}
+
+.new-message-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 15px;
+  border-top: 1px solid #eee;
+}
+
+.new-message-cancel,
+.new-message-start {
+  padding: 9px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.new-message-cancel {
+  border: 1px solid #ddd;
+  background: white;
+}
+
+.new-message-start {
+  border: none;
+  background: #111827;
+  color: white;
+}
+
+.new-message-start:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* =====================================================
+   NO DATA STATES
+===================================================== */
+
+.no-conversations,
+.no-messages,
+.new-message-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #777;
+}
+
+.no-conversations-icon,
+.no-messages-icon,
+.new-message-empty-icon {
+  margin-bottom: 10px;
+  font-size: 30px;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 768px) {
+  .messages-sidebar {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .messages-chat {
+    display: none;
+  }
+
+  .messages-page.chat-open .messages-sidebar {
+    display: none;
+  }
+
+  .messages-page.chat-open .messages-chat {
+    display: flex;
+  }
+
+  .message-item {
+    max-width: 85%;
+  }
+
+  .message-header {
+    padding: 10px 12px;
+  }
+
+  .message-list {
+    padding: 15px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .conversation-header {
+    padding: 15px;
+  }
+
+  .message-header-actions {
+    gap: 2px;
+  }
+
+  .message-header-button {
+    font-size: 17px;
+  }
+
+  .message-bubble {
+    max-width: 280px;
+  }
+
+  .new-message-modal {
+    max-height: 90vh;
+  }
+}
+
+.message-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.message-action-button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: #f1f3f5;
+  cursor: pointer;
+}
+
+/* Add-story avatar and plus badge. */
+[aria-label="Stories"] button[aria-label="Add story"] > div {
+  background-color: #030712 !important;
+  background-image: none !important;
+}
+
+[aria-label="Stories"] button[aria-label="Add story"] > div > span {
+  background-color: #000 !important;
+}
+
+/* =========================================================
+   OMNIX - REELS
+   INSTAGRAM STYLE
+   DYNAMIC VIDEO RATIO
+   NO FORCED BLACK BACKGROUND
+   DESKTOP + TABLET + MOBILE
+   ========================================================= */
+
+/* =========================================================
+   OMNIX REELS - MOBILE ONLY
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* ---------------------------------------------------------
+     REELS PAGE
+     --------------------------------------------------------- */
+
+  .reels-page {
+    width: 100%;
+  }
+
+
+  /* ---------------------------------------------------------
+     REELS HEADER
+     --------------------------------------------------------- */
+
+  .reels-page .reels-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    padding: 10px 12px;
+    margin: 0;
+
+    background: transparent;
+  }
+
+  .reels-page .reels-header-content {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+  }
+
+  .reels-page .reels-header h1 {
+    margin: 0;
+
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 800;
+
+    color: #000;
+  }
+
+  .reels-page .reels-header p {
+    display: none;
+  }
+
+
+  /* ---------------------------------------------------------
+     CREATE REEL ICON
+     --------------------------------------------------------- */
+
+  .reels-page .reels-create-button {
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    color: #000;
+
+    font-size: 0;
+
+    cursor: pointer;
+  }
+
+  .reels-page .reels-create-button::before {
+  content: "+";
+
+  display: block;
+
+  width: auto;
+  height: auto;
+
+  border: none;
+  background: transparent;
+
+  font-size: 32px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  color: #000;
+}
+  /* ---------------------------------------------------------
+     REELS FEED
+     --------------------------------------------------------- */
+
+  .reels-page .reels-main-area {
+    width: 100%;
+  }
+
+  .reels-page .reels-feed {
+    width: 100%;
+  }
+
+
+  /* ---------------------------------------------------------
+     REEL ITEM
+     --------------------------------------------------------- */
+
+  .reels-page .reel-item {
+    width: 100%;
+  }
+
+
+  /* ---------------------------------------------------------
+     REEL VISUAL
+     
+     IMPORTANT:
+     Existing video height ko change nahi karna.
+     --------------------------------------------------------- */
+
+  .reels-page .reel-visual {
+    position: relative;
+    width: 100%;
+  }
+
+
+  /* ---------------------------------------------------------
+     SIDE SLIDE / SCROLL CONTROLS
+     
+     Mobile par nahi chahiye.
+     --------------------------------------------------------- */
+
+  .reels-page .reels-scroll-controls {
+    display: none !important;
+  }
+
+
+  /* ---------------------------------------------------------
+     SIDE ACTION ICONS
+     
+     Video ki existing height ke andar
+     equal vertical spacing.
+     --------------------------------------------------------- */
+
+  .reels-page .reel-actions {
+    position: absolute;
+
+    top: 14px;
+    right: 8px;
+    bottom: 14px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 0;
+
+    z-index: 100;
+  }
+
+
+  /* ---------------------------------------------------------
+     ACTION BUTTON
+     
+     No circle
+     No background
+     White icon
+     --------------------------------------------------------- */
+
+  .reels-page .reel-action-button,
+  .reels-page .reel-action-stat {
+
+    width: 38px;
+    height: 38px;
+    min-height: 38px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 2px;
+
+    background: transparent !important;
+
+    color: #fff;
+
+    box-shadow: none;
+
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+
+  /* ---------------------------------------------------------
+     ACTION HOVER / ACTIVE
+     --------------------------------------------------------- */
+
+  .reels-page .reel-action-button:hover,
+  .reels-page .reel-action-button:active {
+
+    background: transparent !important;
+
+    box-shadow: none;
+
+    transform: none;
+  }
+
+
+  /* ---------------------------------------------------------
+     ICON
+     --------------------------------------------------------- */
+
+  .reels-page .reel-action-icon {
+
+    width: 25px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #fff;
+
+    line-height: 1;
+  }
+
+  .reels-page .reel-action-icon svg {
+
+    width: 25px;
+    height: 25px;
+
+    stroke: #fff;
+    color: #fff;
+  }
+
+
+  /* ---------------------------------------------------------
+     COUNT
+     --------------------------------------------------------- */
+
+  .reels-page .reel-action-count {
+
+    color: #fff;
+
+    font-size: 9px;
+    line-height: 1;
+
+    font-weight: 700;
+
+    text-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.8);
+  }
+
+
+  /* ---------------------------------------------------------
+     LIKE / SAVE
+     
+     No background circle.
+     --------------------------------------------------------- */
+
+  .reels-page .reel-action-button.reel-action-liked,
+  .reels-page .reel-action-button.reel-action-saved {
+
+    background: transparent !important;
+
+    color: #fff;
+
+    box-shadow: none;
+  }
+
+
+  /* ---------------------------------------------------------
+     REEL INFO - PROFILE STYLE
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info {
+
+    position: absolute;
+
+    left: 12px;
+    right: 60px;
+    bottom: 16px;
+
+    z-index: 90;
+
+    color: #fff;
+
+    text-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.9),
+      0 2px 8px rgba(0, 0, 0, 0.7);
+  }
+
+
+  /* ---------------------------------------------------------
+     PROFILE ROW
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-user {
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 8px;
+  }
+
+
+  /* ---------------------------------------------------------
+     AVATAR
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-avatar {
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border: 2px solid #fff;
+  }
+
+
+  /* ---------------------------------------------------------
+     USER DETAILS
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-user-details {
+
+    display: flex;
+    align-items: center;
+
+    gap: 1px;
+
+    min-width: 0;
+  }
+
+
+  /* ---------------------------------------------------------
+     USERNAME
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-username {
+
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+  }
+
+
+  /* ---------------------------------------------------------
+     FOLLOW
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-follow {
+
+    padding: 4px 9px;
+
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+
+    background: transparent;
+
+    color: #fff;
+
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+
+  /* ---------------------------------------------------------
+     FULL NAME
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-fullname {
+
+    margin-top: 2px;
+
+    color: rgba(255, 255, 255, 0.9);
+
+    font-size: 11px;
+  }
+
+
+  /* ---------------------------------------------------------
+     CAPTION
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-caption {
+
+    margin-top: 6px;
+
+    max-width: calc(100vw - 90px);
+
+    color: #fff;
+
+    font-size: 13px;
+    line-height: 1.35;
+
+    overflow-wrap: anywhere;
+  }
+}
+
+
+/* =========================================================
+   OMNIX REELS - SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  /* ---------------------------------------------------------
+     HEADER
+     --------------------------------------------------------- */
+
+  .reels-page .reels-header {
+    padding: 8px 10px;
+  }
+
+  .reels-page .reels-header h1 {
+    font-size: 20px;
+  }
+
+  .reels-page .reels-create-button {
+    width: 36px;
+    height: 36px;
+  }
+
+  .reels-page .reels-create-button::before {
+    width: 28px;
+    height: 28px;
+
+    font-size: 20px;
+  }
+
+
+  /* ---------------------------------------------------------
+     SIDE SLIDE / SCROLL CONTROLS
+     --------------------------------------------------------- */
+
+  .reels-page .reels-scroll-controls {
+    display: none !important;
+  }
+
+
+  /* ---------------------------------------------------------
+     SIDE ACTION ICONS
+     --------------------------------------------------------- */
+
+  .reels-page .reel-actions {
+
+    right: 6px;
+
+    top: 10px;
+    bottom: 10px;
+
+    gap: 0;
+
+    justify-content: space-between;
+  }
+
+
+  /* ---------------------------------------------------------
+     ACTION BUTTON
+     --------------------------------------------------------- */
+
+  .reels-page .reel-action-button,
+  .reels-page .reel-action-stat {
+
+    width: 34px;
+    height: 34px;
+    min-height: 34px;
+
+    padding: 0;
+
+    background: transparent !important;
+
+    color: #fff;
+
+    box-shadow: none;
+  }
+
+
+  /* ---------------------------------------------------------
+     ICON
+     --------------------------------------------------------- */
+
+  .reels-page .reel-action-icon,
+  .reels-page .reel-action-icon svg {
+
+    width: 23px;
+    height: 23px;
+
+    color: #fff;
+    stroke: #fff;
+  }
+
+
+  /* ---------------------------------------------------------
+     COUNT
+     --------------------------------------------------------- */
+
+  .reels-page .reel-action-count {
+
+    font-size: 8px;
+
+    color: #fff;
+  }
+
+
+  /* ---------------------------------------------------------
+     REEL INFO
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info {
+
+    left: 10px;
+    right: 52px;
+    bottom: 12px;
+  }
+
+
+  /* ---------------------------------------------------------
+     AVATAR
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-avatar {
+
+    width: 36px;
+    height: 36px;
+  }
+
+
+  /* ---------------------------------------------------------
+     USERNAME
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-username {
+
+    font-size: 13px;
+  }
+
+
+  /* ---------------------------------------------------------
+     CAPTION
+     --------------------------------------------------------- */
+
+  .reels-page .reel-info-caption {
+
+    font-size: 12px;
+  }
+}
+
+
+
+/* ---------------------------------------------------------
+   SIDE ACTION ICONS - MOBILE
+   --------------------------------------------------------- */
+
+.reels-page .reel-actions {
+
+  position: absolute !important;
+
+  top: 50% !important;
+  right: 6px !important;
+  bottom: auto !important;
+  left: auto !important;
+
+  transform: translateY(-50%) !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 18px !important;
+
+  width: 38px !important;
+  height: auto !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  z-index: 100 !important;
+}
+
+
+/* ---------------------------------------------------------
+   ACTION BUTTON
+   --------------------------------------------------------- */
+
+.reels-page .reel-action-button,
+.reels-page .reel-action-stat {
+
+  position: static !important;
+
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 0 !important;
+
+  border: 0 !important;
+  border-radius: 0 !important;
+
+  background: transparent !important;
+
+  color: #fff !important;
+
+  box-shadow: none !important;
+
+  transform: none !important;
+}
+
+
+/* ---------------------------------------------------------
+   ICON
+   --------------------------------------------------------- */
+
+.reels-page .reel-action-icon {
+
+  width: 23px !important;
+  height: 23px !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  color: #fff !important;
+
+  background: transparent !important;
+}
+
+
+.reels-page .reel-action-icon svg {
+
+  width: 23px !important;
+  height: 23px !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  stroke: #fff !important;
+  color: #fff !important;
+
+  background: transparent !important;
+}
+
+
+/* ---------------------------------------------------------
+   COUNT
+   --------------------------------------------------------- */
+
+.reels-page .reel-action-count {
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  font-size: 8px !important;
+  line-height: 1 !important;
+
+  color: #fff !important;
+
+  text-align: center !important;
+}
+
+
+/* ---------------------------------------------------------
+   REMOVE ALL DESKTOP EFFECTS
+   --------------------------------------------------------- */
+
+.reels-page .reel-action-button:hover,
+.reels-page .reel-action-button:focus,
+.reels-page .reel-action-button:active {
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  transform: none !important;
+}
+
+.reels-page .reel-player {
+  border-radius: 15px !important;
+  overflow: hidden !important;
+}
+
+.reels-page .reel-player-video {
+  border-radius: 1px !important;
+}
+
+
+/* =========================================================
+   ROOT REELS PAGE
+   ========================================================= */
+
+.reels-page {
+  position: relative;
+
+  width: 100%;
+  min-height: 100dvh;
+
+  margin: 0;
+  padding: 0;
+
+  color: #fff;
+
+  overflow: hidden;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   REELS HEADER
+   ========================================================= */
+
+.reels-header {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  z-index: 500;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  width: 100%;
+
+  padding: 18px 24px;
+
+  box-sizing: border-box;
+
+  pointer-events: none;
+
+}
+
+
+/* =========================================================
+   HEADER CONTENT
+   ========================================================= */
+
+.reels-header-content {
+  min-width: 0;
+}
+
+.reels-header h1 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+
+}
+
+.reels-header p {
+  margin: 5px 0 0;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   CREATE REEL BUTTON
+   ========================================================= */
+
+.reels-create-button {
+  pointer-events: auto;
+
+  flex-shrink: 0;
+
+  margin-left: 20px;
+
+  padding: 8px 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.reels-create-button:hover {
+  background: rgba(255, 255, 255, 0.14);
+
+  border-color: rgba(255, 255, 255, 0.55);
+
+  transform: scale(1.03);
+}
+
+.reels-create-button:active {
+  transform: scale(0.96);
+}
+
+
+/* =========================================================
+   MAIN REELS AREA
+   ========================================================= */
+
+.reels-main-area {
+  position: relative;
+
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   REELS FEED
+   ========================================================= */
+
+.reels-feed {
+  position: relative;
+
+  width: 100%;
+  height: 100dvh;
+
+  margin: 0;
+  padding: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+
+  background: transparent;
+
+  overscroll-behavior-y: contain;
+
+  -webkit-overflow-scrolling: touch;
+}
+
+.reels-feed::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* =========================================================
+   EACH REEL ITEM
+   ========================================================= */
+
+.reel-item {
+  position: relative;
+
+  width: 100%;
+  height: 100dvh;
+  min-height: 100dvh;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+
+  box-sizing: border-box;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   REEL VISUAL CONTAINER
+   ========================================================= */
+
+.reel-visual {
+  position: relative;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+
+  width: auto;
+  height: auto;
+
+  overflow: visible;
+
+  isolation: isolate;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   REEL CARD
+   ========================================================= */
+
+.reel-item .reel-card {
+  position: relative;
+
+  --reel-ratio: 0.5625;
+
+  width: min(
+    calc((100dvh - 20px) * var(--reel-ratio)),
+    calc(100vw - 150px)
+  );
+
+  height: min(
+    calc(100dvh - 20px),
+    calc((100vw - 150px) / var(--reel-ratio))
+  );
+
+  aspect-ratio: var(--reel-ratio);
+
+  max-width: calc(100vw - 150px);
+  max-height: calc(100dvh - 20px);
+
+  margin: 0;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  isolation: isolate;
+
+  background: transparent;
+
+  border: none;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   REEL PLAYER
+   ========================================================= */
+
+.reel-card .reel-player {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  z-index: 1;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   REEL PLAYER VIDEO
+   ========================================================= */
+
+.reel-player-video {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  object-position: center;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   VIDEO CLICK AREA
+   ========================================================= */
+
+.reel-player-video-button {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 3;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   CENTER PLAY INDICATOR
+   ========================================================= */
+
+.reel-player-play-indicator {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  z-index: 8;
+
+  width: 66px;
+  height: 66px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  color: #fff;
+
+  pointer-events: none;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.3);
+
+  animation:
+    reelPlayIndicatorIn
+    0.18s
+    ease-out;
+}
+
+@keyframes reelPlayIndicatorIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(0.75);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   PLAY BUTTON
+   ========================================================= */
+
+.reel-player-play-button {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  z-index: 10;
+
+  width: 66px;
+  height: 66px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translate(-50%, -50%);
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  color: #fff;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+
+/* =========================================================
+   MUTE BUTTON
+   RIGHT SIDE - BOTTOM
+   ========================================================= */
+
+.reel-player-mute-button {
+  position: absolute;
+
+  right: 500px;
+  bottom: 14px;
+
+  z-index: 120;
+
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.42);
+
+  color: #fff;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.reel-player-mute-button:hover {
+  background: rgba(0, 0, 0, 0.68);
+
+  border-color: rgba(255, 255, 255, 0.38);
+
+  transform: scale(1.06);
+}
+
+.reel-player-mute-button:active {
+  transform: scale(0.92);
+}
+
+
+/* =========================================================
+   VIDEO PROGRESS BAR
+   ========================================================= */
+
+.reel-player-progress {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 40;
+
+  width: 100%;
+  height: 3px;
+
+  overflow: hidden;
+
+  background: rgba(
+    255,
+    255,
+    255,
+    0.25
+  );
+}
+
+.reel-player-progress-bar {
+  height: 100%;
+
+  width: 0;
+
+  background: #fff;
+
+  transition:
+    width 0.08s linear;
+}
+
+
+/* =========================================================
+   VIDEO ERROR
+   ========================================================= */
+
+.reel-player-error {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 80;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  color: #fff;
+
+  text-align: center;
+}
+
+.reel-player-error p {
+  margin: 0;
+
+  color: rgba(
+    255,
+    255,
+    255,
+    0.7
+  );
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   VIDEO GRADIENT
+   ========================================================= */
+
+.reel-item .reel-card::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 48%;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.84),
+    rgba(0, 0, 0, 0.48) 35%,
+    rgba(0, 0, 0, 0.12) 70%,
+    transparent
+  );
+}
+
+
+/* =========================================================
+   SVG ICONS
+   ========================================================= */
+
+.reel-svg-icon {
+  display: block;
+
+  width: 23px;
+  height: 23px;
+
+  color: currentColor;
+}
+
+.reel-play-icon .reel-svg-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.reel-music-disc .reel-svg-icon {
+  width: 20px;
+  height: 20px;
+}
+
+
+/* =========================================================
+   REEL ACTIONS WRAPPER
+   ========================================================= */
+
+.reel-card .reel-actions-wrapper {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 200;
+
+  width: 100%;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   REEL ACTIONS
+   ========================================================= */
+
+.reel-card .reel-actions {
+  position: absolute;
+
+  right: 12px;
+  bottom: 22px;
+
+  z-index: 100;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 13px;
+
+  pointer-events: auto;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+   ========================================================= */
+.reel-action-button,
+.reel-action-stat {
+  width: 44px;
+
+  min-height: 44px;
+
+  padding: 5px 2px;
+
+  border: none;
+
+  border-radius: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 21px;
+
+  box-sizing: border-box;
+
+  background: transparent;
+
+  color: #000;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  backdrop-filter: none;
+
+  -webkit-backdrop-filter: none;
+}
+
+/* =========================================================
+   ACTION BUTTON
+   ========================================================= */
+
+.reel-action-button {
+  cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease;
+}
+
+.reel-action-button:hover {
+  transform: scale(1.08);
+
+  background: rgba(
+    0,
+    0,
+    0,
+    0.68
+  );
+}
+
+.reel-action-button:active {
+  transform: scale(0.92);
+}
+
+.reel-action-button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.7;
+}
+
+
+/* =========================================================
+   ACTION ICON
+   ========================================================= */
+
+.reel-action-icon {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+
+  font-size: 20px;
+  line-height: 1;
+}
+
+
+/* =========================================================
+   ACTION COUNT
+   ========================================================= */
+
+.reel-action-count {
+  display: block;
+
+  color: #fff;
+
+  font-size: 10px;
+  line-height: 1.1;
+
+  font-weight: 700;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   LIKE
+   ========================================================= */
+
+.reel-action-button.reel-action-liked {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.18
+  );
+}
+
+
+/* =========================================================
+   SAVED
+   ========================================================= */
+
+.reel-action.saved {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.18
+  );
+}
+
+
+/* =========================================================
+   ACTION STAT
+   ========================================================= */
+
+.reel-action-stat {
+  cursor: default;
+
+  user-select: none;
+}
+
+
+/* =========================================================
+   REEL INFO
+   ========================================================= */
+
+.reel-info {
+  position: absolute;
+
+  left: 8px;
+  right: 62px;
+  bottom: 1px;
+
+  z-index: 20;
+
+  color: #fff;
+
+  pointer-events: auto;
+}
+
+
+/* =========================================================
+   USER ROW
+   ========================================================= */
+
+.reel-info-user {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   USER BUTTON
+   ========================================================= */
+
+.reel-info-user-button {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  min-width: 0;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #fff;
+
+  cursor: pointer;
+
+  text-align: left;
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.reel-info-avatar {
+  width: 40px;
+  height: 40px;
+
+  flex: 0 0 40px;
+
+  border: 2px solid #fff;
+  border-radius: 50%;
+
+  object-fit: cover;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   USER TEXT
+   ========================================================= */
+
+.reel-info-user-text {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  gap: 2px;
+}
+
+
+/* =========================================================
+   USERNAME ROW
+   ========================================================= */
+
+.reel-info-username-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  min-width: 0;
+}
+
+
+/* =========================================================
+   USERNAME
+   ========================================================= */
+
+.reel-info-username {
+  max-width: 220px;
+
+  overflow: hidden;
+
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   VERIFIED
+   ========================================================= */
+
+.reel-info-verified {
+  width: 15px;
+  height: 15px;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 15px;
+
+  border-radius: 50%;
+
+  background: #000;
+
+  color: #fff;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  border: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.7
+  );
+}
+
+
+/* =========================================================
+   FULL NAME
+   ========================================================= */
+
+.reel-info-fullname {
+  max-width: 220px;
+
+  overflow: hidden;
+
+  color: rgba(
+    255,
+    255,
+    255,
+    0.82
+  );
+
+  font-size: 11px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   FOLLOW BUTTON
+   ========================================================= */
+
+.reel-info-follow-button {
+  flex-shrink: 0;
+
+  padding: 5px 12px;
+
+  border: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.8
+  );
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #fff;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.reel-info-follow-button:hover {
+  background: #fff;
+
+  color: #111;
+}
+
+.reel-info-follow-button.following {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.12
+  );
+}
+
+
+/* =========================================================
+   REEL CAPTION
+   ========================================================= */
+
+.reel-info-caption {
+  max-width: calc(100% - 5px);
+
+  margin: 8px 0 0;
+
+  color: #fff;
+
+  font-size: 13px;
+
+  line-height: 1.4;
+
+  display: -webkit-box;
+
+  -webkit-box-orient: vertical;
+
+  -webkit-line-clamp: 2;
+
+  line-clamp: 2;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   REEL META
+   ========================================================= */
+
+.reel-info-meta {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 5px;
+
+  color: rgba(
+    255,
+    255,
+    255,
+    0.65
+  );
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   OLD / COMPATIBILITY USER DETAILS
+   ========================================================= */
+
+.reel-user-details {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.reel-user-details strong {
+  max-width: 220px;
+
+  overflow: hidden;
+
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+.reel-user-details span {
+  max-width: 220px;
+
+  overflow: hidden;
+
+  color: rgba(
+    255,
+    255,
+    255,
+    0.75
+  );
+
+  font-size: 11px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   OLD CAPTION COMPATIBILITY
+   ========================================================= */
+
+.reel-caption {
+  position: absolute;
+
+  left: 18px;
+  right: 70px;
+  bottom: 20px;
+
+  z-index: 8;
+
+  color: #fff;
+
+  font-size: 13px;
+
+  line-height: 1.45;
+
+  display: -webkit-box;
+
+  -webkit-box-orient: vertical;
+
+  -webkit-line-clamp: 2;
+
+  line-clamp: 2;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   COMMENTS OVERLAY
+   ========================================================= */
+
+.reel-comments-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 500;
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: inherit;
+
+  overflow: hidden;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   COMMENTS SHEET
+   ========================================================= */
+
+.reel-item .reel-comments {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 510;
+
+  width: 100%;
+
+  max-height: 75%;
+
+  border-radius: 20px 20px 0 0;
+
+  overflow: hidden;
+
+  background: #fff;
+
+  color: #111;
+
+  box-shadow:
+    0 -15px 50px rgba(
+      0,
+      0,
+      0,
+      0.4
+    );
+}
+
+
+/* =========================================================
+   MORE MENU WRAPPER
+   ========================================================= */
+
+.reel-more-wrapper {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* =========================================================
+   MORE BUTTON
+   ========================================================= */
+
+.reel-more-button {
+  position: relative;
+}
+
+
+/* =========================================================
+   OLD MORE MENU
+   ========================================================= */
+
+.reel-more-menu {
+  position: absolute;
+
+  right: 52px;
+  bottom: 0;
+
+  z-index: 700;
+
+  width: 210px;
+
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  background: rgba(
+    255,
+    255,
+    255,
+    0.98
+  );
+
+  color: #111;
+
+  box-shadow:
+    0 12px 40px rgba(
+      0,
+      0,
+      0,
+      0.35
+    );
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* =========================================================
+   MORE MENU ITEM
+   ========================================================= */
+
+.reel-more-menu-item {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 13px 15px;
+
+  border: none;
+  border-radius: 0;
+
+  background: transparent;
+
+  color: #111827;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  line-height: 1.2;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  box-sizing: border-box;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+
+/* =========================================================
+   HOVER
+   ========================================================= */
+
+.reel-more-menu-item:hover {
+  background: #f3f4f6;
+}
+
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.reel-more-menu-item span:first-child {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 17px;
+  line-height: 1;
+}
+
+
+/* =========================================================
+   REPORT
+   ========================================================= */
+
+.reel-report-item {
+  color: #dc2626;
+}
+
+.reel-report-item:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+
+/* =========================================================
+   CANCEL / CLOSE
+   ========================================================= */
+
+.reel-cancel-item {
+  justify-content: center;
+
+  margin-top: 2px;
+
+  padding: 12px 15px;
+
+  border-top: 1px solid #e5e7eb;
+
+  color: #6b7280;
+
+  font-weight: 600;
+
+  text-align: center;
+
+  background: #fff;
+}
+
+.reel-cancel-item:hover {
+  background: #f9fafb;
+  color: #374151;
+}
+
+
+/* =========================================================
+   BUTTON RESET
+   ========================================================= */
+
+.reel-more-menu-item:focus {
+  outline: none;
+}
+
+.reel-more-menu-item:focus-visible {
+  outline: 2px solid #d1d5db;
+  outline-offset: -2px;
+}
+
+
+/* =========================================================
+   ACTIVE / CLICK
+   ========================================================= */
+
+.reel-more-menu-item:active {
+  background: #e5e7eb;
+}
+
+
+/* =========================================================
+   CANCEL ACTIVE
+   ========================================================= */
+
+.reel-cancel-item:active {
+  background: #f3f4f6;
+}
+
+
+/* =========================================================
+   INSTAGRAM STYLE MORE BOTTOM PANEL
+   ========================================================= */
+
+.reel-card .reel-more-panel {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  z-index: 800;
+
+  width: 100%;
+
+  max-height: 82%;
+
+  overflow-y: auto;
+
+  box-sizing: border-box;
+
+  padding: 9px 14px 16px;
+
+  border-radius: 20px 20px 0 0;
+
+  background: #fff;
+
+  color: #111;
+
+  box-shadow:
+    0 -15px 45px rgba(
+      0,
+      0,
+      0,
+      0.35
+    );
+
+  overscroll-behavior: contain;
+
+  animation:
+    reelMorePanelUp
+    0.28s
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    );
+}
+
+
+/* =========================================================
+   MORE PANEL HANDLE
+   ========================================================= */
+
+.reel-more-panel-handle {
+  width: 42px;
+  height: 4px;
+
+  margin: 2px auto 12px;
+
+  border-radius: 999px;
+
+  background: #d0d0d0;
+}
+
+
+/* =========================================================
+   MORE PANEL HEADER
+   ========================================================= */
+
+.reel-more-panel-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 42px;
+}
+
+
+/* =========================================================
+   MORE PANEL TITLE
+   ========================================================= */
+
+.reel-more-panel-title {
+  margin: 0;
+
+  color: #111;
+
+  font-size: 17px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   MORE PANEL CLOSE
+   ========================================================= */
+
+.reel-more-panel-close {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+
+  border-radius: 50%;
+
+  background: #f2f2f2;
+
+  color: #111;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.reel-more-panel-close:hover {
+  background: #e8e8e8;
+
+  transform: scale(1.04);
+}
+
+
+/* =========================================================
+   MORE DIVIDER
+   ========================================================= */
+
+.reel-more-panel-divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 8px 0;
+
+  background: #e8e8e8;
+}
+
+
+/* =========================================================
+   MORE PANEL ITEM
+   ========================================================= */
+
+.reel-more-panel-item,
+.reel-more-panel-cancel {
+  width: 100%;
+  min-height: 52px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 8px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #111;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  text-align: left;
+
+  cursor: pointer;
+}
+
+.reel-more-panel-item:hover,
+.reel-more-panel-cancel:hover {
+  background: #f5f5f5;
+}
+
+
+/* =========================================================
+   DELETE
+   ========================================================= */
+
+.reel-more-panel-delete {
+  color: #ed4956;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   CANCEL
+   ========================================================= */
+
+.reel-more-panel-cancel {
+  justify-content: center;
+
+  margin-top: 8px;
+
+  border-radius: 12px;
+
+  background: #f2f2f2;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   MORE PANEL ANIMATION
+   ========================================================= */
+
+@keyframes reelMorePanelUp {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   MUSIC
+   ========================================================= */
+
+.reel-music {
+  width: 58px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 5px;
+
+  margin-top: 3px;
+
+  color: #fff;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   MUSIC DISC
+   ========================================================= */
+
+.reel-music-disc {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid rgba(
+    255,
+    255,
+    255,
+    0.9
+  );
+
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.25);
+
+  font-size: 18px;
+
+  box-shadow:
+    0 4px 15px rgba(
+      0,
+      0,
+      0,
+      0.4
+    );
+
+  animation:
+    reel-music-spin
+    3s linear infinite;
+}
+
+.reel-music span {
+  width: 72px;
+
+  overflow: hidden;
+
+  color: #fff;
+
+  font-size: 8px;
+  font-weight: 600;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+@keyframes reel-music-spin {
+  from {
+    transform:
+      rotate(0deg);
+  }
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   SCROLL CONTROLS
+   ========================================================= */
+
+.reels-scroll-controls {
+  position: absolute;
+
+  top: 50%;
+  right: 18px;
+
+  z-index: 600;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+
+  transform:
+    translateY(-50%);
+}
+
+
+/* =========================================================
+   SCROLL CONTROLS POSITION
+   ========================================================= */
+
+.reels-scroll-controls {
+  position: fixed;
+  right: 212px;
+  left: 808px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  z-index: 50;
+}
+
+
+/* =========================================================
+   SCROLL BUTTON
+   ========================================================= */
+
+.reels-scroll-button {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.2
+  );
+
+  border-radius: 50%;
+
+  background: rgba(
+    0,
+    0,
+    0,
+    0.72
+  );
+
+  color: #fff;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.reels-scroll-button:hover {
+  background: rgba(
+    255,
+    255,
+    255,
+    0.16
+  );
+
+  transform: scale(1.08);
+}
+
+.reels-scroll-button:active {
+  transform: scale(0.92);
+}
+
+/* =========================================================
+   LOAD MORE
+   ========================================================= */
+
+.reels-load-more {
+  position: absolute;
+
+  left: 50%;
+  bottom: 15px;
+
+  z-index: 700;
+
+  transform:
+    translateX(-50%);
+}
+
+.reels-load-more button {
+  padding: 9px 16px;
+
+  border: 1px solid rgba(
+    255,
+    255,
+    255,
+    0.25
+  );
+
+  border-radius: 999px;
+
+  background: rgba(
+    0,
+    0,
+    0,
+    0.72
+  );
+
+  color: #fff;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.reels-load-more button:disabled {
+  cursor: not-allowed;
+
+  opacity: 0.55;
+}
+
+
+/* =========================================================
+   SIDEBAR ACTIVE ICONS
+   ========================================================= */
+
+.sidebar-nav-link[aria-current="page"] svg {
+  fill: #000;
+
+  stroke: #000;
+}
+
+.sidebar-nav-link[href="/reels"][aria-current="page"]
+svg
+path:last-child {
+  fill: #fff;
+
+  stroke: #fff;
+}
+
+.sidebar-nav-link[href="/create"][aria-current="page"]
+svg
+path:last-child {
+  fill: none;
+
+  stroke: #fff;
+}
+
+.sidebar-nav-link[href="/messages"][aria-current="page"]
+svg
+path:last-child {
+  fill: none;
+
+  stroke: #fff;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.reels-loading {
+  width: 100%;
+  height: 100dvh;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+
+  color: #fff;
+}
+
+.reels-loader {
+  width: 34px;
+  height: 34px;
+
+  border: 3px solid rgba(
+    255,
+    255,
+    255,
+    0.2
+  );
+
+  border-top-color: #fff;
+
+  border-radius: 50%;
+
+  animation:
+    reels-spin
+    0.8s linear infinite;
+}
+
+@keyframes reels-spin {
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.reels-empty {
+  width: 100%;
+  height: 100dvh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  color: #fff;
+
+  text-align: center;
+
+  background: transparent;
+}
+
+.reels-empty-icon {
+  margin-bottom: 15px;
+
+  font-size: 55px;
+}
+
+.reels-empty h2 {
+  margin: 0 0 8px;
+
+  font-size: 22px;
+}
+
+.reels-empty p {
+  margin: 0 0 20px;
+
+  color: #9ca3af;
+
+  font-size: 14px;
+}
+
+.reels-empty button {
+  padding: 10px 18px;
+
+  border: none;
+
+  border-radius: 999px;
+
+  background: #fff;
+
+  color: #111;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.reels-error {
+  width: 100%;
+  height: 100dvh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  color: #fff;
+
+  text-align: center;
+
+  background: transparent;
+}
+
+.reels-error h2 {
+  margin: 0 0 8px;
+
+  font-size: 22px;
+}
+
+.reels-error p {
+  max-width: 450px;
+
+  margin: 0 0 20px;
+
+  color: #9ca3af;
+}
+
+.reels-error button {
+  padding: 10px 18px;
+
+  border: none;
+
+  border-radius: 999px;
+
+  background: #fff;
+
+  color: #111;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   UPLOAD OVERLAY
+   ========================================================= */
+
+.reels-upload-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 2000;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background: rgba(
+    0,
+    0,
+    0,
+    0.72
+  );
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+
+/* =========================================================
+   UPLOAD MODAL
+   ========================================================= */
+
+.reels-upload-modal {
+  width: min(
+    600px,
+    100%
+  );
+
+  max-height: 90dvh;
+
+  overflow-y: auto;
+
+  border-radius: 20px;
+
+  background: #fff;
+
+  box-shadow:
+    0 25px 80px rgba(
+      0,
+      0,
+      0,
+      0.45
+    );
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 1025px) {
+
+  .reel-item {
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+
+    background: transparent;
+  }
+
+
+  /* -------------------------------------------------------
+     DYNAMIC VIDEO RATIO
+     ------------------------------------------------------- */
+
+  .reel-item .reel-card {
+    width: min(
+      calc(
+        (100dvh - 20px) *
+        var(--reel-ratio, 0.5625)
+      ),
+      calc(100vw - 150px)
+    );
+
+    height: min(
+      calc(100dvh - 20px),
+      calc(
+        (100vw - 150px) /
+        var(--reel-ratio, 0.5625)
+      )
+    );
+
+    aspect-ratio:
+      var(--reel-ratio, 0.5625);
+
+    max-width:
+      calc(100vw - 150px);
+
+    max-height:
+      calc(100dvh - 20px);
+
+    background: transparent;
+
+    border-radius: 18px;
+
+    box-shadow: none;
+  }
+
+
+  /* -------------------------------------------------------
+     NAVIGATION
+     ------------------------------------------------------- */
+
+  .reels-scroll-controls {
+    right: 18px;
+  }
+
+
+  /* -------------------------------------------------------
+     DESKTOP MUTE
+     ------------------------------------------------------- */
+
+  .reel-player-mute-button {
+    right: 50px;
+    bottom: 14px;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .reels-header {
+    padding: 15px 18px;
+  }
+
+  .reels-header h1 {
+    font-size: 20px;
+  }
+
+  .reels-header p {
+    font-size: 11px;
+  }
+
+
+  .reel-item .reel-card {
+    width: min(
+      calc(
+        (100dvh - 10px) *
+        var(--reel-ratio, 0.5625)
+      ),
+      calc(100vw - 90px)
+    );
+
+    height: min(
+      calc(100dvh - 10px),
+      calc(
+        (100vw - 90px) /
+        var(--reel-ratio, 0.5625)
+      )
+    );
+
+    aspect-ratio:
+      var(--reel-ratio, 0.5625);
+
+    max-width:
+      calc(100vw - 90px);
+
+    max-height:
+      calc(100dvh - 10px);
+
+    background: transparent;
+
+    border-radius: 15px;
+
+    box-shadow: none;
+  }
+
+
+  .reels-scroll-controls {
+    right: 8px;
+
+    gap: 8px;
+  }
+
+  .reels-scroll-button {
+    width: 40px;
+    height: 40px;
+
+    font-size: 21px;
+  }
+
+
+  .reel-info {
+    left: 15px;
+    right: 76px;
+    bottom: 20px;
+  }
+
+  .reel-card .reel-actions {
+    right: 9px;
+    bottom: 20px;
+
+    gap: 11px;
+  }
+
+  .reel-action-button,
+  .reel-action-stat {
+    width: 42px;
+    min-height: 42px;
+  }
+
+
+  /* -------------------------------------------------------
+     TABLET MUTE
+     ------------------------------------------------------- */
+
+  .reel-player-mute-button {
+    right: 45px;
+    bottom: 14px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  .reels-page {
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+
+    overflow: hidden;
+
+    background: transparent;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE HEADER
+     ------------------------------------------------------- */
+
+  .reels-header {
+    padding:
+      13px
+      14px;
+
+    z-index: 700;
+  }
+
+  .reels-header h1 {
+    font-size: 19px;
+  }
+
+  .reels-header p {
+    display: none;
+  }
+
+  .reels-create-button {
+    padding:
+      7px
+      12px;
+
+    font-size: 11px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE MAIN
+     ------------------------------------------------------- */
+
+  .reels-main-area {
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+
+    background: transparent;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE FEED
+     ------------------------------------------------------- */
+
+  .reels-feed {
+    width: 100%;
+    height: 100dvh;
+
+    scroll-snap-type:
+      y mandatory;
+
+    background: transparent;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE REEL
+     ------------------------------------------------------- */
+
+  .reel-item {
+    width: 100%;
+    height: 100dvh;
+    min-height: 100dvh;
+
+    align-items: stretch;
+    justify-content: stretch;
+
+    scroll-snap-align: start;
+
+    background: transparent;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE VISUAL
+     ------------------------------------------------------- */
+
+  .reel-visual {
+    width: 100%;
+    height: 100dvh;
+
+    overflow: hidden;
+
+    background: transparent;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE CARD
+     ------------------------------------------------------- */
+
+  .reel-item .reel-card {
+    width: 100%;
+    height: 100dvh;
+
+    max-width: none;
+    max-height: none;
+
+    aspect-ratio: auto;
+
+    border-radius: 0;
+
+    box-shadow: none;
+
+    background: transparent;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE PLAYER
+     ------------------------------------------------------- */
+
+  .reel-card .reel-player {
+    width: 100%;
+    height: 100%;
+
+    background: transparent;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE VIDEO
+     ------------------------------------------------------- */
+
+  .reel-player-video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    background: transparent;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE GRADIENT
+     ------------------------------------------------------- */
+
+  .reel-item .reel-card::after {
+    height: 54%;
+
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.86),
+      rgba(0, 0, 0, 0.45) 38%,
+      rgba(0, 0, 0, 0.08) 72%,
+      transparent
+    );
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE MUTE
+     ------------------------------------------------------- */
+
+  .reel-player-mute-button {
+    top: auto;
+    right: 12px;
+    bottom: 14px;
+
+    width: 40px;
+    height: 40px;
+
+    font-size: 18px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE PLAY
+     ------------------------------------------------------- */
+
+  .reel-player-play-button,
+  .reel-player-play-indicator {
+    width: 58px;
+    height: 58px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE ACTIONS
+     ------------------------------------------------------- */
+
+  .reel-card .reel-actions {
+    right: 9px;
+    bottom: 25px;
+
+    gap: 11px;
+  }
+
+  .reel-action-button,
+  .reel-action-stat {
+    width: 42px;
+    min-height: 42px;
+  }
+
+  .reel-action-icon {
+    font-size: 19px;
+  }
+
+  .reel-action-count {
+    font-size: 9px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE INFO
+     ------------------------------------------------------- */
+
+  .reel-info {
+    left: 14px;
+    right: 65px;
+    bottom: 76px;
+  }
+
+  .reel-info-avatar {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+  }
+
+  .reel-info-username {
+    max-width: 170px;
+
+    font-size: 13px;
+  }
+
+  .reel-info-fullname {
+    max-width: 170px;
+
+    font-size: 10px;
+  }
+
+  .reel-info-follow-button {
+    padding:
+      5px
+      10px;
+
+    font-size: 10px;
+  }
+
+  .reel-info-caption {
+    margin-top: 7px;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+  }
+
+  .reel-info-meta {
+    font-size: 9px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE COMMENTS
+     ------------------------------------------------------- */
+
+  .reel-item .reel-comments-overlay {
+    border-radius: 0;
+
+    overflow: hidden;
+
+    background: transparent;
+  }
+
+  .reel-item .reel-comments {
+    max-height: 78%;
+
+    border-radius:
+      20px
+      20px
+      0
+      0;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE MORE PANEL
+     ------------------------------------------------------- */
+
+  .reel-card .reel-more-panel {
+    max-height: 82%;
+
+    padding:
+      8px
+      12px
+      14px;
+
+    border-radius:
+      20px
+      20px
+      0
+      0;
+  }
+
+  .reel-more-panel-title {
+    font-size: 16px;
+  }
+
+  .reel-more-panel-item,
+  .reel-more-panel-cancel {
+    min-height: 50px;
+
+    font-size: 14px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE OLD MENU
+     ------------------------------------------------------- */
+
+  .reel-more-menu {
+    right: 49px;
+
+    width: 200px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE MUSIC
+     ------------------------------------------------------- */
+
+  .reel-music {
+    width: 48px;
+  }
+
+  .reel-music-disc {
+    width: 35px;
+    height: 35px;
+
+    font-size: 16px;
+  }
+
+  .reel-music span {
+    width: 62px;
+
+    font-size: 7px;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE SCROLL CONTROLS
+     ------------------------------------------------------- */
+
+  .reels-scroll-controls {
+    display: none;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE LOAD MORE
+     ------------------------------------------------------- */
+
+  .reels-load-more {
+    display: none;
+  }
+
+
+  /* -------------------------------------------------------
+     MOBILE UPLOAD
+     ------------------------------------------------------- */
+
+  .reels-upload-overlay {
+    align-items: flex-end;
+
+    padding: 0;
+  }
+
+  .reels-upload-modal {
+    width: 100%;
+
+    max-height: 92dvh;
+
+    border-radius:
+      20px
+      20px
+      0
+      0;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .reels-header {
+    padding:
+      11px
+      12px;
+  }
+
+  .reels-header h1 {
+    font-size: 18px;
+  }
+
+  .reels-create-button {
+    padding:
+      6px
+      10px;
+
+    font-size: 10px;
+  }
+
+
+  .reel-info {
+    left: 11px;
+    right: 58px;
+    bottom: 70px;
+  }
+
+  .reel-info-avatar {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+  .reel-info-username {
+    max-width: 145px;
+
+    font-size: 12px;
+  }
+
+  .reel-info-fullname {
+    max-width: 145px;
+
+    font-size: 9px;
+  }
+
+  .reel-info-follow-button {
+    padding:
+      4px
+      9px;
+
+    font-size: 9px;
+  }
+
+  .reel-info-caption {
+    font-size: 11px;
+  }
+
+
+  .reel-card .reel-actions {
+    right: 6px;
+    bottom: 20px;
+
+    gap: 9px;
+  }
+
+  .reel-action-button,
+  .reel-action-stat {
+    width: 38px;
+    min-height: 38px;
+  }
+
+  .reel-action-icon {
+    font-size: 17px;
+  }
+
+  .reel-action-count {
+    font-size: 8px;
+  }
+
+
+  /* -------------------------------------------------------
+     SMALL PHONE MUTE
+     ------------------------------------------------------- */
+
+  .reel-player-mute-button {
+    top: auto;
+    right: 9px;
+    bottom: 12px;
+
+    width: 37px;
+    height: 37px;
+
+    font-size: 17px;
+  }
+
+
+  .reel-player-play-button,
+  .reel-player-play-indicator {
+    width: 54px;
+    height: 54px;
+  }
+
+
+  .reel-more-menu {
+    right: 46px;
+
+    width: 190px;
+  }
+
+
+  .reel-more-panel {
+    border-radius:
+      18px
+      18px
+      0
+      0;
+  }
+}
+
+
+/* =========================================================
+   LANDSCAPE MOBILE
+   ========================================================= */
+
+@media (
+  max-width: 768px
+) and (
+  orientation: landscape
+) {
+
+  .reel-item,
+  .reels-feed,
+  .reels-main-area,
+  .reel-visual {
+
+    height: 100dvh;
+    min-height: 100dvh;
+
+    background: transparent;
+  }
+
+  .reel-info {
+    bottom: 50px;
+  }
+
+  .reel-card .reel-actions {
+    bottom: 15px;
+
+    gap: 8px;
+  }
+
+  .reel-player-mute-button {
+    top: auto;
+    bottom: 14px;
+    right: 12px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .reels-feed {
+    scroll-behavior: auto;
+  }
+
+  .reel-action-button,
+  .reels-create-button,
+  .reels-scroll-button,
+  .reel-player-mute-button {
+    transition: none;
+  }
+
+  .reel-music-disc {
+    animation: none;
+  }
+
+  .reel-more-panel {
+    animation: none;
+  }
+
+  .reel-player-play-indicator {
+    animation: none;
+  }
+}
+
+
+/* =========================================================
+   AUDIO PICKER
+   White Theme + Screenshot Structure
+   ========================================================= */
+
+.audio-picker {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+  color: #111111;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.audio-picker-header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 22px;
+}
+
+.audio-picker-title {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  min-width: 0;
+}
+
+.audio-picker-title-icon {
+  width: 72px;
+  height: 72px;
+
+  flex: 0 0 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  background: #111111;
+  color: #ffffff;
+
+  font-size: 34px;
+}
+
+.audio-picker-title h2 {
+  margin: 0;
+
+  color: #111111;
+
+  font-size: 29px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.audio-picker-title p {
+  margin: 5px 0 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+.audio-picker-reset {
+  height: 52px;
+
+  padding: 0 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  flex: 0 0 auto;
+
+  border: 1px solid #d1d5db;
+  border-radius: 11px;
+
+  background: #ffffff;
+  color: #111111;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.audio-picker-reset:hover {
+  background: #f7f7f7;
+  border-color: #9ca3af;
+}
+
+.audio-picker-reset:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================================
+   AUDIO MODE TABS
+   ========================================================= */
+
+.audio-mode-tabs {
+  width: 100%;
+  min-height: 68px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  margin-bottom: 24px;
+
+  overflow: hidden;
+
+  border: 1px solid #d1d5db;
+  border-radius: 15px;
+
+  background: #ffffff;
+}
+
+.audio-mode-tab {
+  position: relative;
+
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  padding: 0 16px;
+
+  border: 0;
+  border-right: 1px solid #e5e7eb;
+
+  outline: none;
+
+  background: #ffffff;
+  color: #4b5563;
+
+  font-size: 17px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.audio-mode-tab:last-child {
+  border-right: none;
+}
+
+.audio-mode-tab:hover {
+  background: #f7f7f7;
+  color: #111111;
+}
+
+.audio-mode-tab.active {
+  background: #111111;
+  color: #ffffff;
+}
+
+.audio-mode-tab.active:hover {
+  background: #111111;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+.music-search {
+  position: relative;
+
+  width: 100%;
+
+  margin-bottom: 24px;
+}
+
+.music-search input {
+  width: 100%;
+  height: 64px;
+
+  display: block;
+
+  box-sizing: border-box;
+
+  padding: 0 20px 0 55px;
+
+  border: 1px solid #d1d5db;
+  border-radius: 14px;
+
+  outline: none;
+
+  background: #ffffff;
+  color: #111111;
+
+  font-family: inherit;
+  font-size: 16px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.music-search input::placeholder {
+  color: #9ca3af;
+}
+
+.music-search input:focus {
+  border-color: #111111;
+
+  box-shadow:
+    0 0 0 3px rgba(17, 17, 17, 0.06);
+}
+
+.music-search-icon {
+  position: absolute;
+
+  left: 20px;
+  top: 50%;
+
+  z-index: 1;
+
+  transform: translateY(-50%);
+
+  color: #111111;
+
+  font-size: 21px;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   MUSIC COLUMNS
+   ========================================================= */
+
+.music-results {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   PROVIDER CARD
+   ========================================================= */
+
+.music-provider {
+  width: 100%;
+  min-width: 0;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #d1d5db;
+  border-radius: 16px;
+}
+
+
+/* Provider-specific border */
+
+.music-provider.epidemic {
+  border-color: #b8b8b8;
+}
+
+.music-provider.jamendo {
+  border-color: #b8b8b8;
+}
+
+
+/* =========================================================
+   PROVIDER HEADER
+   ========================================================= */
+
+.music-provider-header {
+  width: 100%;
+  min-height: 96px;
+
+  padding: 16px 20px;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  background: #fafafa;
+}
+
+.music-provider-info {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+}
+
+.music-provider-icon {
+  width: 52px;
+  height: 52px;
+
+  flex: 0 0 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #111111;
+  color: #ffffff;
+
+  font-size: 23px;
+  font-weight: 700;
+}
+
+.music-provider.epidemic .music-provider-icon,
+.music-provider.jamendo .music-provider-icon {
+  background: #111111;
+  color: #ffffff;
+}
+
+.music-provider-name {
+  margin: 0;
+
+  overflow: hidden;
+
+  color: #111111;
+
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.music-provider-description {
+  margin: 4px 0 0;
+
+  overflow: hidden;
+
+  color: #6b7280;
+
+  font-size: 13px;
+  line-height: 1.35;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   SONG COUNT
+   ========================================================= */
+
+.music-provider-count {
+  flex: 0 0 auto;
+
+  padding: 8px 14px;
+
+  border-radius: 18px;
+
+  background: #111111;
+  color: #ffffff;
+
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   MUSIC LIST
+   ========================================================= */
+
+.music-list {
+  width: 100%;
+
+  padding: 0 20px;
+
+  box-sizing: border-box;
+}
+
+.music-item {
+  width: 100%;
+  min-height: 88px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 11px 0;
+
+  box-sizing: border-box;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  background: #ffffff;
+}
+
+.music-item:last-child {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   ARTWORK
+   ========================================================= */
+
+.music-item-artwork {
+  width: 62px;
+  height: 62px;
+
+  flex: 0 0 62px;
+
+  display: block;
+
+  border-radius: 9px;
+
+  object-fit: cover;
+
+  background: #f3f4f6;
+
+  border: 1px solid #e5e7eb;
+}
+
+
+/* =========================================================
+   SONG INFO
+   ========================================================= */
+
+.music-item-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.music-item-title {
+  width: 100%;
+
+  margin: 0;
+
+  overflow: hidden;
+
+  color: #111111;
+
+  font-size: 15px;
+  line-height: 1.3;
+  font-weight: 600;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.music-item-artist {
+  width: 100%;
+
+  margin: 4px 0 0;
+
+  overflow: hidden;
+
+  color: #6b7280;
+
+  font-size: 13px;
+  line-height: 1.3;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   DURATION
+   ========================================================= */
+
+.music-item-duration {
+  flex: 0 0 40px;
+
+  color: #4b5563;
+
+  font-size: 13px;
+
+  text-align: right;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PLAY BUTTON
+   ========================================================= */
+
+.music-item-play {
+  width: 43px;
+  height: 43px;
+
+  flex: 0 0 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 2px solid #d1d5db;
+  border-radius: 50%;
+
+  outline: none;
+
+  background: #ffffff;
+  color: #111111;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.music-item-play:hover {
+  background: #111111;
+  border-color: #111111;
+  color: #ffffff;
+
+  transform: scale(1.04);
+}
+
+.music-item-play:active {
+  transform: scale(0.96);
+}
+
+
+/* =========================================================
+   ADD / SELECT BUTTON
+   ========================================================= */
+
+.music-item-add {
+  width: 43px;
+  height: 43px;
+
+  flex: 0 0 43px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #111111;
+  color: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 21px;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.music-item-add:hover {
+  background: #000000;
+
+  transform: scale(1.04);
+}
+
+.music-item-add:active {
+  transform: scale(0.95);
+}
+
+
+/* =========================================================
+   SELECTED SONG
+   ========================================================= */
+
+.music-item.selected {
+  background: #f7f7f7;
+}
+
+.music-item.selected .music-item-add {
+  background: #111111;
+}
+
+
+/* =========================================================
+   BOTTOM ACTIONS
+   ========================================================= */
+
+.audio-picker-actions {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+  gap: 18px;
+
+  margin-top: 24px;
+}
+
+.audio-picker-cancel,
+.audio-picker-share {
+  width: 100%;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+
+/* Cancel */
+
+.audio-picker-cancel {
+  gap: 10px;
+
+  border: 1px solid #d1d5db;
+
+  background: #ffffff;
+  color: #111111;
+}
+
+.audio-picker-cancel:hover {
+  background: #f7f7f7;
+}
+
+.audio-picker-cancel:active {
+  transform: scale(0.99);
+}
+
+
+/* Share */
+
+.audio-picker-share {
+  border: 1px solid #111111;
+
+  background: #111111;
+  color: #ffffff;
+}
+
+.audio-picker-share:hover {
+  background: #000000;
+}
+
+.audio-picker-share:active {
+  transform: scale(0.99);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.music-empty {
+  width: 100%;
+
+  padding: 42px 20px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.music-loading {
+  width: 100%;
+
+  padding: 38px 20px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .audio-picker {
+    padding: 20px;
+  }
+
+  .music-results {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .audio-picker {
+    padding: 16px;
+
+    border-radius: 16px;
+  }
+
+
+  /* Header */
+
+  .audio-picker-header {
+    align-items: flex-start;
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+  }
+
+  .audio-picker-title {
+    gap: 11px;
+  }
+
+  .audio-picker-title-icon {
+    width: 58px;
+    height: 58px;
+
+    flex-basis: 58px;
+
+    font-size: 27px;
+  }
+
+  .audio-picker-title h2 {
+    font-size: 23px;
+  }
+
+  .audio-picker-title p {
+    font-size: 13px;
+  }
+
+
+  /* Reset */
+
+  .audio-picker-reset {
+    width: 48px;
+    height: 48px;
+
+    padding: 0;
+
+    gap: 0;
+
+    font-size: 0;
+  }
+
+
+  /* Tabs */
+
+  .audio-mode-tabs {
+    min-height: 58px;
+
+    margin-bottom: 18px;
+
+    border-radius: 13px;
+  }
+
+  .audio-mode-tab {
+    padding: 0 8px;
+
+    gap: 6px;
+
+    font-size: 14px;
+  }
+
+
+  /* Search */
+
+  .music-search {
+    margin-bottom: 18px;
+  }
+
+  .music-search input {
+    height: 58px;
+
+    padding-left: 50px;
+
+    font-size: 15px;
+  }
+
+  .music-search-icon {
+    left: 18px;
+
+    font-size: 19px;
+  }
+
+
+  /* Provider */
+
+  .music-provider-header {
+    min-height: 84px;
+
+    padding: 14px;
+  }
+
+  .music-provider-info {
+    gap: 10px;
+  }
+
+  .music-provider-icon {
+    width: 46px;
+    height: 46px;
+
+    flex-basis: 46px;
+
+    font-size: 20px;
+  }
+
+  .music-provider-name {
+    font-size: 18px;
+  }
+
+  .music-provider-description {
+    font-size: 12px;
+  }
+
+  .music-provider-count {
+    padding: 7px 10px;
+
+    font-size: 12px;
+  }
+
+
+  /* Music list */
+
+  .music-list {
+    padding: 0 14px;
+  }
+
+  .music-item {
+    min-height: 78px;
+
+    gap: 10px;
+
+    padding: 9px 0;
+  }
+
+  .music-item-artwork {
+    width: 54px;
+    height: 54px;
+
+    flex-basis: 54px;
+  }
+
+  .music-item-title {
+    font-size: 14px;
+  }
+
+  .music-item-artist {
+    font-size: 12px;
+  }
+
+  .music-item-duration {
+    display: none;
+  }
+
+  .music-item-play,
+  .music-item-add {
+    width: 39px;
+    height: 39px;
+
+    flex-basis: 39px;
+  }
+
+
+  /* Bottom */
+
+  .audio-picker-actions {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+
+    margin-top: 18px;
+  }
+
+  .audio-picker-cancel,
+  .audio-picker-share {
+    height: 60px;
+
+    font-size: 16px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  .audio-picker {
+    padding: 12px;
+  }
+
+  .audio-picker-title-icon {
+    width: 50px;
+    height: 50px;
+
+    flex-basis: 50px;
+
+    font-size: 23px;
+  }
+
+  .audio-picker-title h2 {
+    font-size: 20px;
+  }
+
+  .audio-picker-title p {
+    font-size: 11px;
+  }
+
+  .audio-mode-tab {
+    font-size: 13px;
+  }
+
+  .music-provider-header {
+    padding: 12px;
+  }
+
+  .music-provider-name {
+    font-size: 16px;
+  }
+
+  .music-provider-description {
+    font-size: 11px;
+  }
+
+  .music-provider-count {
+    padding: 6px 9px;
+
+    font-size: 11px;
+  }
+
+  .music-list {
+    padding: 0 12px;
+  }
+
+  .music-item-artwork {
+    width: 50px;
+    height: 50px;
+
+    flex-basis: 50px;
+  }
+
+  .music-item-play,
+  .music-item-add {
+    width: 37px;
+    height: 37px;
+
+    flex-basis: 37px;
+  }
+
+}

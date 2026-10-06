@@ -1,0 +1,19 @@
+<svg viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="OMNIX community mark">
+  <defs>
+    <linearGradient id="omnixCore" x1="22" y1="18" x2="75" y2="78" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#38BDF8"/><stop offset=".38" stop-color="#8B5CF6"/><stop offset=".7" stop-color="#EC4899"/><stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+    <g id="omnixPerson" fill="currentColor" stroke="currentColor" stroke-linecap="round">
+      <circle cx="48" cy="10.5" r="4.7" stroke="none"/>
+      <rect x="43.8" y="17.2" width="8.4" height="13.4" rx="4.2" stroke="none"/>
+      <path d="M44.8 20.4 38.2 12.4" fill="none" stroke-width="2.5"/><circle cx="38" cy="12.1" r="1.5" stroke="none"/>
+      <path d="M51.2 20.4 59.2 16.2" fill="none" stroke-width="2.5"/><circle cx="59.5" cy="16" r="1.5" stroke="none"/>
+    </g>
+  </defs>
+  <use href="#omnixPerson" transform="rotate(0 48 48)" style="color:#38BDF8"/><use href="#omnixPerson" transform="rotate(30 48 48)" style="color:#60A5FA"/>
+  <use href="#omnixPerson" transform="rotate(60 48 48)" style="color:#8B5CF6"/><use href="#omnixPerson" transform="rotate(90 48 48)" style="color:#A855F7"/>
+  <use href="#omnixPerson" transform="rotate(120 48 48)" style="color:#EC4899"/><use href="#omnixPerson" transform="rotate(150 48 48)" style="color:#F43F5E"/>
+  <use href="#omnixPerson" transform="rotate(180 48 48)" style="color:#F97316"/><use href="#omnixPerson" transform="rotate(210 48 48)" style="color:#F59E0B"/>
+  <use href="#omnixPerson" transform="rotate(240 48 48)" style="color:#84CC16"/><use href="#omnixPerson" transform="rotate(270 48 48)" style="color:#22C55E"/>
+  <use href="#omnixPerson" transform="rotate(300 48 48)" style="color:#14B8A6"/><use href="#omnixPerson" transform="rotate(330 48 48)" style="color:#06B6D4"/>
+</svg>
