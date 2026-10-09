@@ -2,7 +2,7 @@ import { STORAGE_KEYS } from "../utils/constants";
 
 const BASE_URL =
   import.meta.env.VITE_API_URL ||
-  "http://localhost:5000/api";
+  "https://omnix-bd.onrender.com/api";
 
 // --------------------------------------------------
 // Get authentication token
