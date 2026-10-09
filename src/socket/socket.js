@@ -1,3 +1,4 @@
+
 import { io } from "socket.io-client";
 
 /*
@@ -6,9 +7,14 @@ import { io } from "socket.io-client";
 |--------------------------------------------------------------------------
 */
 
-const SOCKET_URL =
+// Production: Render backend
+// Development: Local backend
+const SOCKET_URL = (
   import.meta.env.VITE_SOCKET_URL ||
-  "http://localhost:5000";
+  (import.meta.env.PROD
+    ? "https://omnix-bd.onrender.com"
+    : "http://localhost:5000")
+).replace(/\/+$/, "");
 
 /*
 |--------------------------------------------------------------------------
@@ -115,22 +121,8 @@ const handleDisconnect = (reason) => {
 | REGISTER INTERNAL SOCKET LISTENERS
 |--------------------------------------------------------------------------
 |
-| IMPORTANT:
-| Ye sirf socket ke internal lifecycle listeners hain.
+| Message listeners are handled by GlobalMessageManager.
 |
-| Message listeners yahan register NAHI honge.
-|
-| Message events:
-| message:new
-| message:sent
-| message:delivered
-| message:read
-| message:updated
-| message:deleted
-|
-| Inko GlobalMessageManager handle karega.
-|
-|--------------------------------------------------------------------------
 */
 
 const registerSocketListeners = () => {
@@ -138,35 +130,13 @@ const registerSocketListeners = () => {
     return;
   }
 
-  socket.off(
-    "connect",
-    handleConnect
-  );
+  socket.off("connect", handleConnect);
+  socket.off("connect_error", handleConnectError);
+  socket.off("disconnect", handleDisconnect);
 
-  socket.off(
-    "connect_error",
-    handleConnectError
-  );
-
-  socket.off(
-    "disconnect",
-    handleDisconnect
-  );
-
-  socket.on(
-    "connect",
-    handleConnect
-  );
-
-  socket.on(
-    "connect_error",
-    handleConnectError
-  );
-
-  socket.on(
-    "disconnect",
-    handleDisconnect
-  );
+  socket.on("connect", handleConnect);
+  socket.on("connect_error", handleConnectError);
+  socket.on("disconnect", handleDisconnect);
 };
 
 /*
@@ -216,12 +186,6 @@ export const connectSocket = ({
   */
 
   if (socket) {
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE AUTH TOKEN
-    |--------------------------------------------------------------------------
-    */
-
     if (token) {
       socket.auth = {
         ...(socket.auth || {}),
@@ -229,19 +193,7 @@ export const connectSocket = ({
       };
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RESTORE INTERNAL LISTENERS
-    |--------------------------------------------------------------------------
-    */
-
     registerSocketListeners();
-
-    /*
-    |--------------------------------------------------------------------------
-    | ALREADY CONNECTED
-    |--------------------------------------------------------------------------
-    */
 
     if (socket.connected) {
       connected = true;
@@ -252,12 +204,6 @@ export const connectSocket = ({
 
       return socket;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | DISCONNECTED SOCKET
-    |--------------------------------------------------------------------------
-    */
 
     if (socket.disconnected) {
       console.log(
@@ -277,78 +223,63 @@ export const connectSocket = ({
   */
 
   console.log(
-    "Omnix Socket.IO: creating new socket..."
+    "Omnix Socket.IO: connecting to:",
+    SOCKET_URL
   );
 
-  socket = io(
-    SOCKET_URL,
-    {
-      /*
-      |--------------------------------------------------------------------------
-      | AUTHENTICATION
-      |--------------------------------------------------------------------------
-      */
+  socket = io(SOCKET_URL, {
+    /*
+    |--------------------------------------------------------------------------
+    | AUTHENTICATION
+    |--------------------------------------------------------------------------
+    */
 
-      auth: {
-        token:
-          token ||
-          currentToken ||
-          null,
-      },
+    auth: {
+      token: token || currentToken || null,
+    },
 
-      /*
-      |--------------------------------------------------------------------------
-      | CREDENTIALS
-      |--------------------------------------------------------------------------
-      */
+    /*
+    |--------------------------------------------------------------------------
+    | CREDENTIALS
+    |--------------------------------------------------------------------------
+    */
 
-      withCredentials: true,
+    withCredentials: true,
 
-      /*
-      |--------------------------------------------------------------------------
-      | TRANSPORT
-      |--------------------------------------------------------------------------
-      |
-      | WebSocket preferred.
-      | Polling fallback available.
-      |
-      |--------------------------------------------------------------------------
-      */
+    /*
+    |--------------------------------------------------------------------------
+    | TRANSPORT
+    |--------------------------------------------------------------------------
+    |
+    | WebSocket preferred.
+    | Polling fallback available.
+    |
+    */
 
-      transports: [
-        "websocket",
-        "polling",
-      ],
+    transports: [
+      "websocket",
+      "polling",
+    ],
 
-      /*
-      |--------------------------------------------------------------------------
-      | RECONNECTION
-      |--------------------------------------------------------------------------
-      */
+    /*
+    |--------------------------------------------------------------------------
+    | RECONNECTION
+    |--------------------------------------------------------------------------
+    */
 
-      reconnection: true,
+    reconnection: true,
+    reconnectionAttempts: Infinity,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
 
-      reconnectionAttempts: Infinity,
+    /*
+    |--------------------------------------------------------------------------
+    | AUTO CONNECT
+    |--------------------------------------------------------------------------
+    */
 
-      reconnectionDelay: 1000,
-
-      reconnectionDelayMax: 5000,
-
-      /*
-      |--------------------------------------------------------------------------
-      | AUTO CONNECT
-      |--------------------------------------------------------------------------
-      */
-
-      autoConnect: true,
-    }
-  );
-
-  /*
-  |--------------------------------------------------------------------------
-  | REGISTER INTERNAL LISTENERS
-  |--------------------------------------------------------------------------
-  */
+    autoConnect: true,
+  });
 
   registerSocketListeners();
 
@@ -361,45 +292,21 @@ export const connectSocket = ({
 |--------------------------------------------------------------------------
 */
 
-export const updateSocketToken = (
-  token
-) => {
+export const updateSocketToken = (token) => {
   if (!token) {
     return false;
   }
 
   currentToken = token;
 
-  /*
-  |--------------------------------------------------------------------------
-  | SOCKET NOT CREATED
-  |--------------------------------------------------------------------------
-  */
-
   if (!socket) {
     return false;
   }
-
-  /*
-  |--------------------------------------------------------------------------
-  | UPDATE SOCKET AUTH
-  |--------------------------------------------------------------------------
-  */
 
   socket.auth = {
     ...(socket.auth || {}),
     token,
   };
-
-  /*
-  |--------------------------------------------------------------------------
-  | CONNECTED
-  |--------------------------------------------------------------------------
-  |
-  | Existing connection ko destroy nahi karenge.
-  |
-  |--------------------------------------------------------------------------
-  */
 
   if (socket.connected) {
     console.log(
@@ -408,16 +315,6 @@ export const updateSocketToken = (
 
     return true;
   }
-
-  /*
-  |--------------------------------------------------------------------------
-  | DISCONNECTED
-  |--------------------------------------------------------------------------
-  |
-  | Next connection latest token ke saath hoga.
-  |
-  |--------------------------------------------------------------------------
-  */
 
   if (socket.disconnected) {
     console.log(
@@ -435,10 +332,8 @@ export const updateSocketToken = (
 | DISCONNECT SOCKET
 |--------------------------------------------------------------------------
 |
-| IMPORTANT:
-| Sirf logout / intentional shutdown par call karna hai.
+| Call on logout or intentional shutdown.
 |
-|--------------------------------------------------------------------------
 */
 
 export const disconnectSocket = () => {
@@ -447,32 +342,8 @@ export const disconnectSocket = () => {
   }
 
   try {
-    /*
-    |--------------------------------------------------------------------------
-    | DISABLE AUTOMATIC RECONNECTION
-    |--------------------------------------------------------------------------
-    |
-    | Logout ke baad socket dobara automatically connect nahi hona chahiye.
-    |
-    |--------------------------------------------------------------------------
-    */
-
     socket.io.opts.reconnection = false;
-
-    /*
-    |--------------------------------------------------------------------------
-    | REMOVE ALL SOCKET LISTENERS
-    |--------------------------------------------------------------------------
-    */
-
     socket.removeAllListeners();
-
-    /*
-    |--------------------------------------------------------------------------
-    | DISCONNECT
-    |--------------------------------------------------------------------------
-    */
-
     socket.disconnect();
   } catch (error) {
     console.error(
@@ -481,15 +352,11 @@ export const disconnectSocket = () => {
     );
   } finally {
     socket = null;
-
     connected = false;
-
     currentToken = null;
 
     onConnectCallback = null;
-
     onErrorCallback = null;
-
     onDisconnectCallback = null;
   }
 };
@@ -521,18 +388,9 @@ export const getSocketClient = () => {
 |--------------------------------------------------------------------------
 | SUBSCRIBE TO SOCKET EVENT
 |--------------------------------------------------------------------------
-|
-| IMPORTANT:
-| GlobalMessageManager isi function ke through message events
-| subscribe karega.
-|
-|--------------------------------------------------------------------------
 */
 
-export const subscribeTo = (
-  event,
-  callback
-) => {
+export const subscribeTo = (event, callback) => {
   if (!socket) {
     console.warn(
       "Socket instance is not available."
@@ -557,25 +415,9 @@ export const subscribeTo = (
     return null;
   }
 
-  /*
-  |--------------------------------------------------------------------------
-  | IMPORTANT
-  |--------------------------------------------------------------------------
-  |
-  | Same callback ko duplicate register hone se rokna.
-  |
-  |--------------------------------------------------------------------------
-  */
-
-  socket.off(
-    event,
-    callback
-  );
-
-  socket.on(
-    event,
-    callback
-  );
+  // Prevent duplicate registration of the same callback.
+  socket.off(event, callback);
+  socket.on(event, callback);
 
   return {
     event,
@@ -589,13 +431,8 @@ export const subscribeTo = (
 |--------------------------------------------------------------------------
 */
 
-export const unsubscribeFrom = (
-  subscription
-) => {
-  if (
-    !subscription ||
-    !socket
-  ) {
+export const unsubscribeFrom = (subscription) => {
+  if (!subscription || !socket) {
     return;
   }
 
@@ -612,10 +449,7 @@ export const unsubscribeFrom = (
   }
 
   try {
-    socket.off(
-      event,
-      callback
-    );
+    socket.off(event, callback);
   } catch (error) {
     console.error(
       "Failed to unsubscribe:",
@@ -627,19 +461,6 @@ export const unsubscribeFrom = (
 /*
 |--------------------------------------------------------------------------
 | SEND SOCKET EVENT
-|--------------------------------------------------------------------------
-|
-| Generic WebSocket sender.
-|
-| Example:
-|
-| sendSocketMessage("message:send", {
-|   conversationId,
-|   clientMessageId,
-|   content,
-|   messageType: "TEXT"
-| });
-|
 |--------------------------------------------------------------------------
 */
 
@@ -672,11 +493,7 @@ export const sendSocketMessage = (
   }
 
   try {
-    socket.emit(
-      event,
-      body
-    );
-
+    socket.emit(event, body);
     return true;
   } catch (error) {
     console.error(
@@ -694,9 +511,7 @@ export const sendSocketMessage = (
 |--------------------------------------------------------------------------
 */
 
-export const joinConversation = (
-  conversationId
-) => {
+export const joinConversation = (conversationId) => {
   if (!conversationId) {
     return false;
   }
@@ -704,8 +519,7 @@ export const joinConversation = (
   return sendSocketMessage(
     "conversation:join",
     {
-      conversationId:
-        String(conversationId),
+      conversationId: String(conversationId),
     }
   );
 };
@@ -716,9 +530,7 @@ export const joinConversation = (
 |--------------------------------------------------------------------------
 */
 
-export const leaveConversation = (
-  conversationId
-) => {
+export const leaveConversation = (conversationId) => {
   if (!conversationId) {
     return false;
   }
@@ -726,8 +538,7 @@ export const leaveConversation = (
   return sendSocketMessage(
     "conversation:leave",
     {
-      conversationId:
-        String(conversationId),
+      conversationId: String(conversationId),
     }
   );
 };
@@ -737,11 +548,8 @@ export const leaveConversation = (
 | SEND MESSAGE
 |--------------------------------------------------------------------------
 |
-| Main WhatsApp-style message sender.
+| Main socket-based message sender.
 |
-| REST sendMessage use nahi karna.
-|
-|--------------------------------------------------------------------------
 */
 
 export const sendMessage = ({
@@ -772,11 +580,9 @@ export const sendMessage = ({
   return sendSocketMessage(
     "message:send",
     {
-      conversationId:
-        String(conversationId),
+      conversationId: String(conversationId),
 
-      clientMessageId:
-        String(clientMessageId),
+      clientMessageId: String(clientMessageId),
 
       content:
         typeof content === "string"
@@ -785,11 +591,9 @@ export const sendMessage = ({
 
       messageType,
 
-      mediaUrl:
-        mediaUrl || null,
+      mediaUrl: mediaUrl || null,
 
-      mediaPublicId:
-        mediaPublicId || null,
+      mediaPublicId: mediaPublicId || null,
 
       replyToMessageId:
         replyToMessageId
@@ -803,15 +607,9 @@ export const sendMessage = ({
 |--------------------------------------------------------------------------
 | MARK MESSAGE AS DELIVERED
 |--------------------------------------------------------------------------
-|
-| Receiver ko message:new milne ke baad call karna hai.
-|
-|--------------------------------------------------------------------------
 */
 
-export const markMessageDelivered = (
-  messageId
-) => {
+export const markMessageDelivered = (messageId) => {
   if (!messageId) {
     return false;
   }
@@ -819,8 +617,7 @@ export const markMessageDelivered = (
   return sendSocketMessage(
     "message:delivered",
     {
-      messageId:
-        String(messageId),
+      messageId: String(messageId),
     }
   );
 };
@@ -829,15 +626,9 @@ export const markMessageDelivered = (
 |--------------------------------------------------------------------------
 | MARK CONVERSATION AS READ
 |--------------------------------------------------------------------------
-|
-| Chat open hone par call karna hai.
-|
-|--------------------------------------------------------------------------
 */
 
-export const markConversationRead = (
-  conversationId
-) => {
+export const markConversationRead = (conversationId) => {
   if (!conversationId) {
     return false;
   }
@@ -845,8 +636,7 @@ export const markConversationRead = (
   return sendSocketMessage(
     "message:read",
     {
-      conversationId:
-        String(conversationId),
+      conversationId: String(conversationId),
     }
   );
 };
@@ -857,9 +647,7 @@ export const markConversationRead = (
 |--------------------------------------------------------------------------
 */
 
-export const startTyping = (
-  conversationId
-) => {
+export const startTyping = (conversationId) => {
   if (!conversationId) {
     return false;
   }
@@ -867,8 +655,7 @@ export const startTyping = (
   return sendSocketMessage(
     "typing:start",
     {
-      conversationId:
-        String(conversationId),
+      conversationId: String(conversationId),
     }
   );
 };
@@ -879,9 +666,7 @@ export const startTyping = (
 |--------------------------------------------------------------------------
 */
 
-export const stopTyping = (
-  conversationId
-) => {
+export const stopTyping = (conversationId) => {
   if (!conversationId) {
     return false;
   }
@@ -889,8 +674,7 @@ export const stopTyping = (
   return sendSocketMessage(
     "typing:stop",
     {
-      conversationId:
-        String(conversationId),
+      conversationId: String(conversationId),
     }
   );
 };
@@ -912,11 +696,8 @@ export const updateMessage = ({
   return sendSocketMessage(
     "message:updated",
     {
-      messageId:
-        String(messageId),
-
-      content:
-        String(content).trim(),
+      messageId: String(messageId),
+      content: String(content).trim(),
     }
   );
 };
@@ -927,9 +708,7 @@ export const updateMessage = ({
 |--------------------------------------------------------------------------
 */
 
-export const deleteMessage = (
-  messageId
-) => {
+export const deleteMessage = (messageId) => {
   if (!messageId) {
     return false;
   }
@@ -937,8 +716,7 @@ export const deleteMessage = (
   return sendSocketMessage(
     "message:deleted",
     {
-      messageId:
-        String(messageId),
+      messageId: String(messageId),
     }
   );
 };
@@ -951,36 +729,20 @@ export const deleteMessage = (
 
 export default {
   connectSocket,
-
   disconnectSocket,
-
   updateSocketToken,
-
   isSocketConnected,
-
   getSocketClient,
-
   subscribeTo,
-
   unsubscribeFrom,
-
   sendSocketMessage,
-
   joinConversation,
-
   leaveConversation,
-
   sendMessage,
-
   markMessageDelivered,
-
   markConversationRead,
-
   startTyping,
-
   stopTyping,
-
   updateMessage,
-
   deleteMessage,
 };
