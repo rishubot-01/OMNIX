@@ -1,11 +1,13 @@
 
-import React from "react";
+import React, { useState } from "react";
 
 const ConversationItem = ({
   conversation,
   isSelected,
   onClick,
 }) => {
+  const [imageFailed, setImageFailed] = useState(false);
+
   if (!conversation) {
     return null;
   }
@@ -24,9 +26,6 @@ const ConversationItem = ({
   |--------------------------------------------------------------------------
   | Current User ID
   |--------------------------------------------------------------------------
-  |
-  | ConversationList se currentUserId aa raha hai.
-  |
   */
 
   const currentUserId =
@@ -39,49 +38,30 @@ const ConversationItem = ({
   |--------------------------------------------------------------------------
   | Find Other User
   |--------------------------------------------------------------------------
-  |
-  | Backend:
-  |
-  | participants: [
-  |   currentUser,
-  |   otherUser
-  | ]
-  |
-  | Agar ConversationList ne already user bana diya hai
-  | to wahi use hoga.
-  |
   */
 
-  const participants =
-    Array.isArray(
-      conversation?.participants
-    )
-      ? conversation.participants
-      : [];
+  const participants = Array.isArray(
+    conversation?.participants
+  )
+    ? conversation.participants
+    : [];
 
   const participantUser =
-    participants.find(
-      (participant) => {
-        const participantId =
-          participant?._id ||
-          participant?.id ||
-          participant;
+    participants.find((participant) => {
+      const participantId =
+        participant?._id ||
+        participant?.id ||
+        participant;
 
-        /*
-         * Current user ko skip karo.
-         */
-
-        if (
-          currentUserId &&
-          String(participantId) ===
-            String(currentUserId)
-        ) {
-          return false;
-        }
-
-        return true;
+      if (
+        currentUserId &&
+        String(participantId) === String(currentUserId)
+      ) {
+        return false;
       }
-    ) || {};
+
+      return true;
+    }) || {};
 
   const user =
     conversation?.user ||
@@ -101,15 +81,22 @@ const ConversationItem = ({
     user?.username ||
     "OMNIX User";
 
-  const username =
-    user?.username ||
-    "";
+  const username = user?.username || "";
 
   const avatar =
     user?.avatar ||
     user?.profileImage ||
     user?.profilePicture ||
-    "/assets/images/default-avatar.png";
+    "";
+
+  /*
+  |--------------------------------------------------------------------------
+  | Dynamic Avatar Initial
+  |--------------------------------------------------------------------------
+  */
+
+  const initial =
+    String(name).trim().charAt(0).toUpperCase() || "U";
 
   /*
   |--------------------------------------------------------------------------
@@ -117,11 +104,9 @@ const ConversationItem = ({
   |--------------------------------------------------------------------------
   */
 
-  const isOnline =
-    Boolean(
-      user?.online ||
-      user?.isOnline
-    );
+  const isOnline = Boolean(
+    user?.online || user?.isOnline
+  );
 
   /*
   |--------------------------------------------------------------------------
@@ -133,8 +118,7 @@ const ConversationItem = ({
     conversation?.lastMessage?.content ||
     conversation?.lastMessage?.text ||
     (
-      typeof conversation?.lastMessage ===
-      "string"
+      typeof conversation?.lastMessage === "string"
         ? conversation.lastMessage
         : ""
     ) ||
@@ -158,12 +142,11 @@ const ConversationItem = ({
   |--------------------------------------------------------------------------
   */
 
-  const unreadCount =
-    Number(
-      conversation?.unreadCount ||
-      conversation?.unreadMessages ||
-      0
-    );
+  const unreadCount = Number(
+    conversation?.unreadCount ||
+    conversation?.unreadMessages ||
+    0
+  );
 
   /*
   |--------------------------------------------------------------------------
@@ -172,9 +155,7 @@ const ConversationItem = ({
   */
 
   const formattedTime =
-    formatConversationTime(
-      lastMessageTime
-    );
+    formatConversationTime(lastMessageTime);
 
   /*
   |--------------------------------------------------------------------------
@@ -186,97 +167,67 @@ const ConversationItem = ({
     <button
       type="button"
       className={`conversation-item ${
-        isSelected
-          ? "conversation-item-active"
-          : ""
+        isSelected ? "conversation-item-active" : ""
       }`}
       onClick={onClick}
-      data-conversation-id={
-        conversationId
-      }
+      data-conversation-id={conversationId}
     >
-
-      {/* ======================================================
-          Avatar
-      ======================================================= */}
+      {/* Avatar */}
 
       <div className="conversation-avatar-wrapper">
-
-        <img
-          src={avatar}
-          alt={name}
-          className="conversation-avatar"
-          onError={(event) => {
-            event.currentTarget.src =
-              "/assets/images/default-avatar.png";
-          }}
-        />
+        {avatar && !imageFailed ? (
+          <img
+            src={avatar}
+            alt={`${name} profile`}
+            className="conversation-avatar"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div
+            className="conversation-avatar conversation-avatar-fallback"
+            role="img"
+            aria-label={`${name} profile`}
+          >
+            {initial}
+          </div>
+        )}
 
         {isOnline && (
           <span className="online-status" />
         )}
-
       </div>
 
-      {/* ======================================================
-          Conversation Information
-      ======================================================= */}
+      {/* Conversation Information */}
 
       <div className="conversation-info">
-
-        {/* ----------------------------------------------------
-            Top
-        ----------------------------------------------------- */}
-
         <div className="conversation-top">
-
-          <h4>
-            {name}
-          </h4>
+          <h4>{name}</h4>
 
           {formattedTime && (
             <span className="conversation-time">
               {formattedTime}
             </span>
           )}
-
         </div>
 
-        {/* ----------------------------------------------------
-            Bottom
-        ----------------------------------------------------- */}
-
         <div className="conversation-bottom">
-
           <p className="conversation-last-message">
             {lastMessage}
           </p>
 
           {unreadCount > 0 && (
             <span className="unread-count">
-              {unreadCount > 99
-                ? "99+"
-                : unreadCount}
+              {unreadCount > 99 ? "99+" : unreadCount}
             </span>
           )}
-
         </div>
-
-        {/* ----------------------------------------------------
-            Username
-        ----------------------------------------------------- */}
 
         {username && (
           <span className="sr-only">
-            @{username.replace(
-              "@",
-              ""
-            )}
+            @{username.replace("@", "")}
           </span>
         )}
-
       </div>
-
     </button>
   );
 };
@@ -287,21 +238,12 @@ const ConversationItem = ({
 |--------------------------------------------------------------------------
 */
 
-function formatConversationTime(
-  date
-) {
+function formatConversationTime(date) {
   if (!date) {
     return "";
   }
 
-  /*
-   * Backend agar already formatted
-   * time bhej raha hai.
-   *
-   * Example:
-   * "10:30 PM"
-   */
-
+  // Already formatted time, e.g. "10:30 PM"
   if (
     typeof date === "string" &&
     !date.includes("-") &&
@@ -311,49 +253,32 @@ function formatConversationTime(
     return date;
   }
 
-  const conversationDate =
-    new Date(date);
+  const conversationDate = new Date(date);
 
-  if (
-    Number.isNaN(
-      conversationDate.getTime()
-    )
-  ) {
+  if (Number.isNaN(conversationDate.getTime())) {
     return "";
   }
 
-  const now =
-    new Date();
+  const now = new Date();
 
   const diff =
-    now.getTime() -
-    conversationDate.getTime();
-
-  /*
-   * Future date ko "Now" show karo.
-   */
+    now.getTime() - conversationDate.getTime();
 
   if (diff < 0) {
     return "Now";
   }
 
-  const minutes =
-    Math.floor(
-      diff /
-        (1000 * 60)
-    );
+  const minutes = Math.floor(
+    diff / (1000 * 60)
+  );
 
-  const hours =
-    Math.floor(
-      diff /
-        (1000 * 60 * 60)
-    );
+  const hours = Math.floor(
+    diff / (1000 * 60 * 60)
+  );
 
-  const days =
-    Math.floor(
-      diff /
-        (1000 * 60 * 60 * 24)
-    );
+  const days = Math.floor(
+    diff / (1000 * 60 * 60 * 24)
+  );
 
   if (minutes < 1) {
     return "Now";

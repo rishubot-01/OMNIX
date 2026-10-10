@@ -369,13 +369,13 @@ function Stories({
               : "Add story"
           }
         >
-          <div
-            className={`relative mx-auto flex items-center justify-center rounded-full p-[3px] shadow-sm ${
-              ownGroup
-                ? "bg-black"
-                : "bg-gray-200"
-            }`}
-          >
+          <div 
+       className={`relative mx-auto ml-6 flex items-center justify-center rounded-full p-[0px] shadow-md ${ 
+        ownGroup 
+       ? "bg-black" 
+       : "bg-gray-200" 
+      }`} 
+     >
             <Avatar
               src={avatarOf(
                 currentUser

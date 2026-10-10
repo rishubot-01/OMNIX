@@ -429,7 +429,8 @@ function Home() {
   */
 
   return (
-    <div className="-ml-4 space-y-1">
+    
+<div className="-mx-4 min-w-0 space-y-1 sm:mx-0">
 
       {/* ========================================
           STORIES

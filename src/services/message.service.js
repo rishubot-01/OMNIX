@@ -145,13 +145,7 @@ const getMessages = async (
   const response = await api.get(
     `/messages/conversations/${encodeURIComponent(
       String(conversationId)
-    )}/messages`,
-    {
-      params: {
-        page: safePage,
-        size: safeSize,
-      },
-    }
+    )}/messages?page=${safePage}&size=${safeSize}`
   );
 
   return response.data;
@@ -333,16 +327,13 @@ const searchUsers = async (
     };
   }
 
-  const response = await api.get(
-    "/messages/users/search",
-    {
-      params: {
-        query: searchQuery,
-      },
-    }
-  );
+  const params = new URLSearchParams({
+    query: searchQuery,
+  });
 
-  return response.data;
+  return api.get(
+    `/messages/users/search?${params.toString()}`
+  );
 };
 
 /*
@@ -370,4 +361,3 @@ const messageService = {
 };
 
 export default messageService;
-

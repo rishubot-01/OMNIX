@@ -1,3 +1,4 @@
+
 import React, {
   useEffect,
   useRef,
@@ -11,6 +12,7 @@ const MessageHeader = ({
   onVideoCall,
 }) => {
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [imageFailed, setImageFailed] = useState(false);
 
   const moreMenuRef = useRef(null);
 
@@ -63,7 +65,14 @@ const MessageHeader = ({
     user?.avatar ||
     user?.profileImage ||
     user?.profilePicture ||
-    "/assets/images/default-avatar.png";
+    "";
+
+  /* ----------------------------------------------------------
+     Dynamic Avatar Initial
+  ---------------------------------------------------------- */
+
+  const initial =
+    String(name).trim().charAt(0).toUpperCase() || "U";
 
   /* ----------------------------------------------------------
      Online Status
@@ -73,6 +82,14 @@ const MessageHeader = ({
     user?.online ||
     user?.isOnline
   );
+
+  /* ----------------------------------------------------------
+     Reset Avatar Error When User Changes
+  ---------------------------------------------------------- */
+
+  useEffect(() => {
+    setImageFailed(false);
+  }, [avatar, userId]);
 
   /* ----------------------------------------------------------
      Close More Menu On Outside Click
@@ -266,15 +283,22 @@ const MessageHeader = ({
         >
           <div className="message-header-avatar-wrapper">
 
-            <img
-              src={avatar}
-              alt={name}
-              className="message-header-avatar"
-              onError={(event) => {
-                event.currentTarget.src =
-                  "/assets/images/default-avatar.png";
-              }}
-            />
+            {avatar && !imageFailed ? (
+              <img
+                src={avatar}
+                alt={`${name} profile`}
+                className="message-header-avatar"
+                onError={() => setImageFailed(true)}
+              />
+            ) : (
+              <div
+                className="message-header-avatar message-header-avatar-fallback"
+                role="img"
+                aria-label={`${name} profile`}
+              >
+                {initial}
+              </div>
+            )}
 
             {/* Green dot ONLY when online */}
 

@@ -1,3 +1,4 @@
+
 import Avatar from "../common/Avatar";
 
 const idOf = (value) =>
@@ -30,6 +31,8 @@ function StoryItem({
     ? group.stories
     : [];
 
+  // Ring is considered viewed only when every active
+  // story in this group has been viewed by this user.
   const viewed =
     stories.length > 0 &&
     stories.every(
@@ -45,9 +48,7 @@ function StoryItem({
 
   const storyName = nameOf(owner);
 
-  const avatarSize = compact
-    ? "md"
-    : "md";
+  const avatarSize = compact ? "md" : "md";
 
   return (
     <button
@@ -55,9 +56,7 @@ function StoryItem({
       onClick={onClick}
       className="w-16 shrink-0 text-center"
       aria-label={`View ${storyName}'s story`}
-      data-story-owner-id={
-        ownerId || undefined
-      }
+      data-story-owner-id={ownerId || undefined}
     >
       <div
         className={`

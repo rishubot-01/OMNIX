@@ -730,7 +730,7 @@ const ConversationList = ({
                     user?.avatar ||
                     user?.profileImage ||
                     user?.profilePicture ||
-                    "/assets/images/default-avatar.png";
+                    "";
 
                   const online =
                     Boolean(
@@ -739,61 +739,19 @@ const ConversationList = ({
                     );
 
                   return (
-                    <button
-                      type="button"
+                    <UserSearchResultItem
                       key={userId}
-                      className="conversation-item"
+                      user={user}
+                      name={name}
+                      username={username}
+                      avatar={avatar}
+                      online={online}
                       onClick={() =>
                         handleUserClick(
                           user
                         )
                       }
-                    >
-
-                      {/* Avatar */}
-
-                      <div className="conversation-avatar-wrapper">
-                        <img
-                          src={avatar}
-                          alt={name}
-                          className="conversation-avatar"
-                          onError={(
-                            event
-                          ) => {
-                            event.currentTarget.src =
-                              "/assets/images/default-avatar.png";
-                          }}
-                        />
-
-                        {online && (
-                          <span className="online-status" />
-                        )}
-                      </div>
-
-                      {/* User Info */}
-
-                      <div className="conversation-info">
-
-                        <div className="conversation-top">
-                          <h4>
-                            {name}
-                          </h4>
-                        </div>
-
-                        <div className="conversation-bottom">
-                          <p className="conversation-last-message">
-                            {username
-                              ? `@${username.replace(
-                                  "@",
-                                  ""
-                                )}`
-                              : "Start a conversation"}
-                          </p>
-                        </div>
-
-                      </div>
-
-                    </button>
+                    />
                   );
                 }
               )}
@@ -996,5 +954,98 @@ const ConversationList = ({
     </div>
   );
 };
+
+/*
+|--------------------------------------------------------------------------
+| User Search Result Item
+|--------------------------------------------------------------------------
+|
+| Search result avatar:
+| - Photo available: show photo.
+| - Photo missing or broken: show user's first initial.
+| - Failed image does not retry the default-avatar URL.
+|--------------------------------------------------------------------------
+*/
+
+function UserSearchResultItem({
+  user,
+  name,
+  username,
+  avatar,
+  online,
+  onClick,
+}) {
+  const [imageFailed, setImageFailed] = useState(false);
+
+  useEffect(() => {
+    setImageFailed(false);
+  }, [avatar]);
+
+  const initial =
+    String(name || "U").trim().charAt(0).toUpperCase() || "U";
+
+  const userId =
+    user?._id ||
+    user?.id;
+
+  return (
+    <button
+      type="button"
+      key={userId}
+      className="conversation-item"
+      onClick={onClick}
+    >
+
+      {/* Avatar */}
+
+      <div className="conversation-avatar-wrapper">
+        {avatar && !imageFailed ? (
+          <img
+            src={avatar}
+            alt={`${name} profile`}
+            className="conversation-avatar"
+            onError={() => setImageFailed(true)}
+          />
+        ) : (
+          <div
+            className="conversation-avatar conversation-avatar-fallback"
+            role="img"
+            aria-label={`${name} profile`}
+          >
+            {initial}
+          </div>
+        )}
+
+        {online && (
+          <span className="online-status" />
+        )}
+      </div>
+
+      {/* User Info */}
+
+      <div className="conversation-info">
+
+        <div className="conversation-top">
+          <h4>
+            {name}
+          </h4>
+        </div>
+
+        <div className="conversation-bottom">
+          <p className="conversation-last-message">
+            {username
+              ? `@${username.replace(
+                  "@",
+                  ""
+                )}`
+              : "Start a conversation"}
+          </p>
+        </div>
+
+      </div>
+
+    </button>
+  );
+}
 
 export default ConversationList;

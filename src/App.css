@@ -1600,7 +1600,7 @@
 
 .message-header-actions {
   display: flex;
-  gap: 6px;
+  gap: 10px;
 }
 
 .message-header-button,
@@ -2349,7 +2349,7 @@
   }
 
   .message-header-actions {
-    gap: 2px;
+    gap: 5px;
   }
 
   .message-header-button {
@@ -7091,3 +7091,37 @@ path:last-child {
   }
 
 }
+
+
+
+.message-header-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #374151;
+  font-size: 18px;
+  font-weight: 600;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+.conversation-avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #374151;
+  font-size: 20px;
+  font-weight: 600;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
