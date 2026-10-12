@@ -217,14 +217,32 @@ const ConversationList = ({
             response
           );
 
-        const normalized =
-          items
-            .map(
-              normalizeConversation
-            )
-            .filter(Boolean);
+        
+        const normalized = items
+          .map(normalizeConversation)
+          .filter(Boolean);
 
-        setConversations(normalized);
+        const uniqueConversations = [
+          ...new Map(
+            normalized
+              .filter((conversation) => {
+                const id =
+                  conversation?._id ||
+                  conversation?.id;
+
+                return id && String(id).trim() !== "";
+              })
+              .map((conversation) => [
+                String(
+                  conversation._id ||
+                  conversation.id
+                ),
+                conversation,
+              ])
+          ).values(),
+        ];
+
+        setConversations(uniqueConversations);
       } catch (err) {
         console.error(
           "Failed to load conversations:",

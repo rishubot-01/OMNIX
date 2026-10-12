@@ -89,6 +89,8 @@ const CallModal = ({
 
   const localStreamRef = useRef(null);
 
+  const localMediaPromiseRef = useRef(null);
+
   const peerConnectionsRef = useRef(
     new Map()
   );
@@ -587,100 +589,100 @@ const CallModal = ({
   }, [stopCallSound]);
 
 
-  /*
+    /* 
   |--------------------------------------------------------------------------
-  | Get Local Media
+  | Get Local Media 
   |--------------------------------------------------------------------------
   */
 
   const getLocalMedia = useCallback(
     async () => {
+      const existingStream = localStreamRef.current;
 
-      try {
-
-        setError("");
-
-        const stream =
-          await navigator.mediaDevices.getUserMedia(
-            {
-              audio: true,
-              video: isVideoCall,
-            }
-          );
-
-        localStreamRef.current =
-          stream;
-
-        setLocalStream(stream);
-
-        /*
-         * Local video preview.
-         */
-        if (
-          localVideoRef.current &&
-          isVideoCall
-        ) {
-          localVideoRef.current.srcObject =
-            stream;
-        }
-
-        /*
-         * Getting local media does NOT mean the call is connected.
-         * WebRTC connectionstatechange sets "connected" later.
-         */
-        if (isCaller) {
-          setCallStatus(
-            targetIsActive
-              ? "ringing"
-              : "connecting"
-          );
-        } else {
-          setCallStatus("connecting");
-        }
-
-        return stream;
-
-      } catch (err) {
-
-        console.error(
-          "getUserMedia error:",
-          err
-        );
-
-        let message =
-          "Unable to access microphone/camera.";
-
-        if (
-          err?.name ===
-          "NotAllowedError"
-        ) {
-          message =
-            "Microphone/camera permission denied.";
-        }
-
-        if (
-          err?.name ===
-          "NotFoundError"
-        ) {
-          message =
-            "Required microphone/camera not found.";
-        }
-
-        setError(message);
-
-        setCallStatus("failed");
-
-        return null;
+      // Reuse the existing stream if its tracks are still active.
+      if (
+        existingStream &&
+        existingStream.getAudioTracks().some(
+          (track) => track.readyState === "live"
+        ) &&
+        (
+          !isVideoCall ||
+          existingStream.getVideoTracks().some(
+            (track) => track.readyState === "live"
+          )
+        )
+      ) {
+        return existingStream;
       }
 
+      // Prevent multiple simultaneous microphone/camera requests.
+      if (localMediaPromiseRef.current) {
+        return localMediaPromiseRef.current;
+      }
+
+      localMediaPromiseRef.current = (async () => {
+        try {
+          setError("");
+
+          const stream =
+            await navigator.mediaDevices.getUserMedia({
+              audio: true,
+              video: isVideoCall,
+            });
+
+          localStreamRef.current = stream;
+          setLocalStream(stream);
+
+          /*
+           * Local video preview.
+           */
+          if (
+            localVideoRef.current &&
+            isVideoCall
+          ) {
+            localVideoRef.current.srcObject = stream;
+          }
+
+          if (isCaller) {
+            setCallStatus(
+              targetIsActive ? "ringing" : "connecting"
+            );
+          } else {
+            setCallStatus("connecting");
+          }
+
+          return stream;
+        } catch (err) {
+          console.error("getUserMedia error:", err);
+
+          let message =
+            "Unable to access microphone/camera.";
+
+          if (err?.name === "NotAllowedError") {
+            message =
+              "Microphone/camera permission denied.";
+          } else if (err?.name === "NotFoundError") {
+            message =
+              "Required microphone/camera not found.";
+          }
+
+          setError(message);
+          setCallStatus("failed");
+
+          return null;
+        } finally {
+          localMediaPromiseRef.current = null;
+        }
+      })();
+
+      return localMediaPromiseRef.current;
     },
-    [isVideoCall]
+    [isVideoCall, isCaller, targetIsActive]
   );
 
-
-  /*
+    /* 
   |--------------------------------------------------------------------------
-  | Create Peer Connection
+  | Create Peer Connection 
   |--------------------------------------------------------------------------
   */
 
@@ -695,7 +697,6 @@ const CallModal = ({
         const peerId =
           String(remoteUserId);
 
-
         /*
          * Already exists?
          */
@@ -708,12 +709,24 @@ const CallModal = ({
           return existingPeer;
         }
 
+        /*
+         * Ensure local microphone/camera
+         * is ready before creating the peer.
+         */
+        const localStream =
+          await getLocalMedia();
 
+        if (!localStream) {
+          return null;
+        }
+
+        /*
+         * Create peer connection.
+         */
         const peer =
           new RTCPeerConnection(
             ICE_SERVERS
           );
-
 
         /*
          * Save peer.
@@ -723,25 +736,19 @@ const CallModal = ({
           peer
         );
 
-
         /*
          * Add local tracks.
          */
-        if (localStreamRef.current) {
+        localStream
+          .getTracks()
+          .forEach((track) => {
 
-          localStreamRef.current
-            .getTracks()
-            .forEach((track) => {
+            peer.addTrack(
+              track,
+              localStream
+            );
 
-              peer.addTrack(
-                track,
-                localStreamRef.current
-              );
-
-            });
-
-        }
-
+          });
 
         /*
          * ICE candidate.
@@ -763,7 +770,6 @@ const CallModal = ({
 
         };
 
-
         /*
          * Remote track.
          */
@@ -771,11 +777,35 @@ const CallModal = ({
           event
         ) => {
 
-          const stream =
-            event.streams?.[0];
+          /*
+           * Use the received stream when available.
+           * Otherwise, build a stream from the track.
+           */
+          let stream =
+            event.streams?.[0] ||
+            remoteStreamsRef.current.get(
+              peerId
+            );
 
           if (!stream) {
-            return;
+            stream = new MediaStream();
+          }
+
+          /*
+           * Avoid adding the same track twice.
+           */
+          if (
+            event.track &&
+            !stream
+              .getTracks()
+              .some(
+                (track) =>
+                  track.id === event.track.id
+              )
+          ) {
+            stream.addTrack(
+              event.track
+            );
           }
 
           remoteStreamsRef.current.set(
@@ -783,6 +813,9 @@ const CallModal = ({
             stream
           );
 
+          /*
+           * Update remote streams state.
+           */
           setRemoteStreams(
             Array.from(
               remoteStreamsRef.current.entries()
@@ -794,8 +827,41 @@ const CallModal = ({
             )
           );
 
-        };
+          /*
+           * Attach remote audio for audio-only calls.
+           */
+          if (
+            !isVideoCall &&
+            remoteAudioRef.current
+          ) {
+            const audioElement =
+              remoteAudioRef.current;
 
+            audioElement.srcObject =
+              stream;
+
+            audioElement.muted =
+              isSpeakerOff;
+
+            audioElement.volume = 1;
+
+            const playPromise =
+              audioElement.play();
+
+            if (
+              playPromise &&
+              typeof playPromise.catch === "function"
+            ) {
+              playPromise.catch((error) => {
+                console.warn(
+                  "Remote audio playback failed:",
+                  error
+                );
+              });
+            }
+          }
+
+        };
 
         /*
          * Connection state.
@@ -825,16 +891,17 @@ const CallModal = ({
 
           };
 
-
         return peer;
 
       },
       [
         callId,
         closePeerConnection,
+        getLocalMedia,
+        isVideoCall,
+        isSpeakerOff,
       ]
     );
-
 
   /*
   |--------------------------------------------------------------------------
@@ -1790,23 +1857,37 @@ const CallModal = ({
     ]);
 
 
-  /*
+    /* 
   |--------------------------------------------------------------------------
-  | Toggle Speaker
+  | Toggle Speaker 
   |--------------------------------------------------------------------------
-  */
+  */ 
 
-  const handleToggleSpeaker =
-    useCallback(() => {
+  const handleToggleSpeaker = 
+    useCallback(() => { 
 
-      const nextSpeakerOff =
-        !isSpeakerOff;
+      const nextSpeakerOff = 
+        !isSpeakerOff; 
 
+      setIsSpeakerOff( 
+        nextSpeakerOff 
+      ); 
 
-      setIsSpeakerOff(
-        nextSpeakerOff
-      );
+      /*
+       * Mute/unmute remote audio playback.
+       */
+      if (remoteAudioRef.current) {
 
+        remoteAudioRef.current.muted =
+          nextSpeakerOff;
+
+        /*
+         * Keep the audio volume enabled.
+         * Muting is controlled by the muted property.
+         */
+        remoteAudioRef.current.volume = 1;
+
+      }
 
       /*
        * Browser audio output support.
@@ -1814,55 +1895,54 @@ const CallModal = ({
        * Not every browser/device supports
        * setSinkId().
        */
-      if (
-        remoteAudioRef.current &&
+      if ( 
+        remoteAudioRef.current && 
         typeof remoteAudioRef.current
-          .setSinkId === "function"
-      ) {
+          .setSinkId === "function" 
+      ) { 
 
         /*
          * Default audio device is used
          * when speaker is enabled.
          *
-         * This is kept as a UI state because
-         * mobile browsers have limited
-         * speaker routing control.
+         * Mobile browsers have limited
+         * speaker routing control, so the
+         * button controls mute/unmute here.
          */
-      }
+      } 
 
-    }, [isSpeakerOff]);
+    }, [isSpeakerOff]); 
 
 
-  /*
+  /* 
   |--------------------------------------------------------------------------
-  | End Call
+  | End Call 
   |--------------------------------------------------------------------------
-  */
+  */ 
 
-  const handleEndCall =
-    useCallback(() => {
+  const handleEndCall = 
+    useCallback(() => { 
 
-      if (callId) {
+      if (callId) { 
 
-        endCallEvent({
-          callId,
-        });
+        endCallEvent({ 
+          callId, 
+        }); 
 
-      }
+      } 
 
-      stopCallSound();
-      cleanupCall();
+      stopCallSound(); 
+      cleanupCall(); 
 
-      setCallStatus("ended");
+      setCallStatus("ended"); 
 
-      onClose?.();
+      onClose?.(); 
 
-    }, [
-      callId,
-      cleanupCall,
-      onClose,
-    ]);
-
+    }, [ 
+      callId, 
+      cleanupCall, 
+      onClose, 
+    ]); 
 
   /*
   |--------------------------------------------------------------------------
